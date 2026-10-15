@@ -1,0 +1,37 @@
+name: Flutter CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+    paths: ["frontend/**", ".github/workflows/frontend-ci.yml"]
+  push:
+    branches: [develop, main]
+    paths: ["frontend/**", ".github/workflows/frontend-ci.yml"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Create platform folders if missing
+        run: |
+          if [ ! -d web ] || [ ! -d android ]; then
+            flutter create --platforms=android,web --project-name qissago --org com.qissago .
+          fi
+      - name: Install packages
+        run: flutter pub get
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed lib test
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
+      - name: Test
+        run: flutter test --coverage
+      - name: Build web
+        run: flutter build web --release

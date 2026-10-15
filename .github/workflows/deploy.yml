@@ -1,0 +1,61 @@
+# CD: runs when code reaches main.
+#  - Backend: triggers a deploy on Render (only if the RENDER_DEPLOY_HOOK_URL secret is set).
+#  - Web app: builds Flutter web and publishes it to GitHub Pages.
+# One-time setup: repo Settings -> Pages -> Source: "GitHub Actions";
+# repo Settings -> Secrets and variables -> Actions: add RENDER_DEPLOY_HOOK_URL (secret)
+# and PROD_API_URL (variable, e.g. https://qissago-api.onrender.com).
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render deploy
+        env:
+          HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "No Render hook set yet - skipping backend deploy"; exit 0; fi
+          curl -fsS -X POST "$HOOK"
+
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Create platform folders if missing
+        run: |
+          if [ ! -d web ]; then flutter create --platforms=android,web --project-name qissago --org com.qissago .; fi
+      - run: flutter pub get
+      - name: Build
+        run: >-
+          flutter build web --release
+          --base-href "/${{ github.event.repository.name }}/"
+          --dart-define=API_URL=${{ vars.PROD_API_URL }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/build/web
+      - id: deployment
+        uses: actions/deploy-pages@v4
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
