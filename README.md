@@ -67,7 +67,7 @@ The language model runs locally through Ollama, so no user data is sent to a thi
 The **Orchestrator Agent** receives the confirmed preferences and runs the planning agents in a fixed order for each of the three plan variants. It then computes the match score and ranks the results. All agents communicate through a shared state object and a trace log.
 
 <p align="center">
-  <img src="docs/diagrams/fig_5_5_agent_pipeline.png" alt="QissaGo agent pipeline" width="100%">
+  <img src="diagrams/fig_5_5_agent_pipeline.png" alt="QissaGo agent pipeline" width="100%">
 </p>
 
 | Agent | Responsibility |
@@ -85,7 +85,7 @@ The **Orchestrator Agent** receives the confirmed preferences and runs the plann
 The Flutter clients communicate with a FastAPI backend over HTTPS using JSON and JWT authentication. The backend runs in a Docker container alongside Ollama on a cloud host and persists data in a managed PostgreSQL 16 database. The web app is served from GitHub Pages, and the Android APK is distributed through GitHub Releases.
 
 <p align="center">
-  <img src="docs/diagrams/fig_9_1_deployment_diagram.png" alt="QissaGo deployment diagram" width="100%">
+  <img src="diagrams/fig_9_1_deployment_diagram.png" alt="QissaGo deployment diagram" width="100%">
 </p>
 
 ---
@@ -137,8 +137,8 @@ qissago/
 │   ├── lib/                         (main.dart, theme.dart, core/, screens/, widgets/)
 │   ├── test/
 │   ├── pubspec.yaml, pubspec.lock, analysis_options.yaml, .metadata
+├── diagrams/                        (architecture, deployment, CI/CD, roadmap and branching diagrams)
 ├── docs/
-│   └── diagrams/                    (architecture, deployment, CI/CD, roadmap and branching diagrams)
 ├── .gitignore
 ├── docker-compose.yml
 └── README.md
@@ -236,7 +236,7 @@ flutter test
 Every pull request and push triggers the `backend-ci` and `frontend-ci` workflows. A change can only be merged when linting, tests and the build all pass and at least one reviewer has approved. Pushing a version tag triggers the `release-apk` workflow, which attaches the Android APK to a GitHub Release.
 
 <p align="center">
-  <img src="docs/diagrams/fig_E_1_cicd_pipeline_pull_request.png" alt="QissaGo CI/CD pipeline" width="100%">
+  <img src="diagrams/fig_E_1_cicd_pipeline_pull_request.png" alt="QissaGo CI/CD pipeline" width="100%">
 </p>
 
 ---
@@ -246,7 +246,7 @@ Every pull request and push triggers the `backend-ci` and `frontend-ci` workflow
 Changes reach `main` only through pull requests. Work branches from `develop` using the prefixes `feature/`, `fix/`, `docs/` or `chore/`, and commit messages follow the Conventional Commits style. A release is created by merging `develop` into `main` and tagging the result.
 
 <p align="center">
-  <img src="docs/diagrams/fig_E_3_additional_diagrams_referenced_in.png" alt="QissaGo branching and release flow" width="100%">
+  <img src="diagrams/fig_E_3_additional_diagrams_referenced_in.png" alt="QissaGo branching and release flow" width="100%">
 </p>
 
 ---
@@ -256,7 +256,7 @@ Changes reach `main` only through pull requests. Work branches from `develop` us
 The project is delivered in three iterations.
 
 <p align="center">
-  <img src="docs/diagrams/fig_E_2_iteration_roadmap.png" alt="QissaGo iteration roadmap" width="100%">
+  <img src="diagrams/fig_E_2_iteration_roadmap.png" alt="QissaGo iteration roadmap" width="100%">
 </p>
 
 | Iteration | Focus | Status |
