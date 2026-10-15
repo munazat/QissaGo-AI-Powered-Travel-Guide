@@ -51,7 +51,7 @@ jobs:
           flutter build web --release
           --base-href "/${{ github.event.repository.name }}/"
           --dart-define=API_URL=${{ vars.PROD_API_URL }}
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: frontend/build/web
       - id: deployment
