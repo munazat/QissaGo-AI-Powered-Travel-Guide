@@ -1,0 +1,20 @@
+[project]
+name = "qissago-backend"
+version = "0.1.0"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "B", "UP"]
+ignore = [
+  "B008",  # FastAPI uses Depends() in default arguments
+  "E501",  # long lines are handled by the formatter; long regexes are fine
+]
