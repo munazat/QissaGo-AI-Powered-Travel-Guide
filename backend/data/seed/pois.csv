@@ -1,0 +1,233 @@
+id,city_id,name,category,interests,entry_fee_local,entry_fee_foreign,visit_minutes,lat,lon,outdoor,best_time,open_time,close_time,priority,access,wiki_title,description,fee_source_url,hours_source_url,checked_on,verified
+lhr_fort,lahore,Lahore Fort,landmark,history|art,150,600,120,31.5880,74.3153,1,morning,08:30,17:00,3,,Lahore Fort,"Mughal citadel with the Sheesh Mahal, grand gates and wide courtyards.",https://wanderlog.com/place/details/67696/fort-de-lahore,,2026-10-15,no
+lhr_badshahi,lahore,Badshahi Mosque,mosque,spiritual|history|art,100,100,60,31.5879,74.3107,1,evening,07:00,21:00,3,,Badshahi Mosque,Seventeenth-century red sandstone mosque with one of the largest courtyards in the world.,,,,no
+lhr_wazir,lahore,Wazir Khan Mosque,mosque,spiritual|art|history,100,100,60,31.5833,74.3236,1,morning,08:00,19:00,3,,Wazir Khan Mosque,Mughal mosque covered in Kashi tile work and fresco inside the Walled City.,,,,no
+lhr_delhi_gate,lahore,Delhi Gate and Shahi Guzargah,heritage walk,history|food|art,300,300,90,31.5822,74.3262,1,morning,09:00,20:00,2,,Delhi Gate (Lahore),Old royal route through the Walled City lined with bazaars and havelis.,,,,no
+lhr_hammam,lahore,Shahi Hammam,landmark,history|art,300,300,45,31.5826,74.3255,0,any,09:00,18:00,2,,Shahi Hammam,Restored Mughal bathhouse with painted chambers near Delhi Gate.,,,,no
+lhr_food_street,lahore,Fort Road Food Street,food street,food|history,800,800,90,31.5871,74.3123,1,evening,17:00,23:30,2,,,Rooftop restaurants facing the Badshahi Mosque and Lahore Fort.,,,,no
+lhr_shalimar,lahore,Shalimar Gardens,garden,nature|history|art,20,500,90,31.5857,74.3820,1,morning,08:30,17:00,3,,Shalimar Gardens (Lahore),"UNESCO-listed Mughal garden with terraces, pools and fountains.",https://www.thenews.pk/tns/detail/1121440-a-fact-finding-visit-to-shalimar-gardens,,2026-10-15,no
+lhr_minar,lahore,Minar-e-Pakistan,monument,history|family|nature,100,100,75,31.5925,74.3095,1,evening,09:00,22:00,3,,Minar-e-Pakistan,"National monument in Greater Iqbal Park, lit up in the evening.",,,,no
+lhr_museum,lahore,Lahore Museum,museum,art|history,50,1000,90,31.5684,74.3080,0,midday,09:00,17:00,3,,Lahore Museum,"Gandhara sculpture, miniature paintings and the Fasting Buddha.",https://www.realjourneytravels.com/places/lahore-museum/,https://lahoremuseum.punjab.gov.pk/about_us,2026-10-15,no
+lhr_anarkali,lahore,Anarkali Bazaar,market,shopping|food|history,300,300,90,31.5672,74.3108,1,evening,11:00,22:00,2,,Anarkali Bazaar,"One of the oldest markets in South Asia for fabric, jewellery and street food.",,,,no
+lhr_liberty,lahore,Liberty Market,market,shopping,300,300,90,31.5105,74.3432,1,evening,12:00,22:00,1,,Liberty Market,"Busy Gulberg market for clothes, shoes and quick bites.",,,,no
+lhr_zoo,lahore,Lahore Zoo,zoo,family|nature,200,200,120,31.5564,74.3255,1,morning,08:00,17:00,2,,Lahore Zoo,"One of the oldest zoos in the subcontinent, on Mall Road.",,,,no
+lhr_jilani,lahore,Jilani Park,park,nature|family,0,0,75,31.5470,74.3360,1,evening,06:00,22:00,1,,Jilani Park,"Large park at the Racecourse with lawns, fountains and walking tracks.",,,,no
+lhr_bagh_jinnah,lahore,Bagh-e-Jinnah,garden,nature|family,0,0,75,31.5545,74.3300,1,morning,06:00,21:00,2,,Bagh-e-Jinnah (Lahore),Colonial-era botanical garden with old trees and the Quaid-e-Azam Library.,,,,no
+lhr_packages,lahore,Packages Mall,mall,shopping|family|food,500,500,120,31.4710,74.3554,0,midday,11:00,22:00,1,,Packages Mall,"Air-conditioned mall with brands, a cinema and a large food court.",,,,no
+lhr_emporium,lahore,Emporium Mall,mall,shopping|family,500,500,120,31.4672,74.2660,0,midday,11:00,22:00,1,,Emporium Mall,"Large mall in Johar Town with shops, a cinema and indoor play areas.",,,,no
+lhr_data_darbar,lahore,Data Darbar,shrine,spiritual,0,0,45,31.5793,74.3030,1,evening,00:00,23:59,2,,Data Darbar,"Shrine of Data Ganj Bakhsh, one of the oldest Sufi shrines in South Asia.",,,,no
+lhr_jahangir,lahore,Tomb of Jahangir,tomb,history|art,200,200,75,31.6223,74.3036,1,morning,09:00,17:00,2,,Tomb of Jahangir,Mausoleum of Emperor Jahangir in a quiet garden at Shahdara.,,,,no
+lhr_nur_jahan,lahore,Tomb of Nur Jahan,tomb,history,100,100,45,31.6190,74.3060,1,morning,09:00,17:00,1,,Tomb of Nur Jahan,Tomb of Empress Nur Jahan near her husband's mausoleum.,,,,no
+lhr_wagah,lahore,Wagah Border Ceremony,ceremony,history|family,500,500,120,31.6046,74.5732,1,evening,15:30,18:30,3,,Wagah-Attari border ceremony,Daily flag-lowering ceremony at the Pakistan-India border.,,,,no
+lhr_ranjit,lahore,Samadhi of Ranjit Singh,heritage,spiritual|history|art,100,100,45,31.5895,74.3125,1,morning,09:00,17:00,1,,Samadhi of Ranjit Singh,Sikh mausoleum with gilded domes next to the Lahore Fort.,,,,no
+lhr_iqbal_tomb,lahore,Tomb of Allama Iqbal,tomb,history|spiritual,0,0,20,31.5878,74.3115,1,any,09:00,18:00,2,,Tomb of Allama Iqbal,Resting place of the national poet beside the Badshahi Mosque.,,,,no
+lhr_alhamra,lahore,Alhamra Arts Council,arts centre,art,500,500,90,31.5617,74.3315,0,evening,10:00,22:00,1,,Alhamra Arts Council,"Theatre, exhibitions and cultural events on Mall Road.",,,,no
+lhr_safari,lahore,Lahore Safari Zoo,safari park,family|nature|adventure,500,500,150,31.3775,74.2240,1,morning,09:00,17:00,2,,Lahore Zoo Safari,Open safari park with a drive-through lion area and bird enclosures.,,,,no
+lhr_jallo,lahore,Jallo Park,park,nature|family|adventure,150,150,120,31.5770,74.4740,1,morning,09:00,18:00,1,,Jallo Park,"Wildlife park with forest walks, boating and a small zoo.",,,,no
+lhr_gawalmandi,lahore,Gawalmandi Food Street,food street,food,500,500,90,31.5745,74.3170,1,evening,18:00,23:30,2,,Gawalmandi,"Old Lahore food street known for paye, nihari and fried fish.",,,,no
+lhr_mm_alam,lahore,MM Alam Road,dining street,food|shopping,1000,1000,90,31.5150,74.3490,1,evening,12:00,23:30,1,,M.M. Alam Road,"Gulberg street of cafes, restaurants and boutiques.",,,,no
+lhr_cathedral,lahore,Cathedral Church of the Resurrection,church,spiritual|art|history,0,0,30,31.5633,74.3150,0,any,09:00,17:00,1,,"Cathedral Church of the Resurrection, Lahore","Gothic Revival cathedral on Mall Road, built in the 1880s.",,,,no
+isb_faisal,islamabad,Faisal Mosque,mosque,spiritual|art,0,0,60,33.7295,73.0372,1,evening,09:00,21:00,3,,Faisal Mosque,Tent-shaped national mosque at the foot of the Margalla Hills.,https://awaywiththesteiners.com/faisal-mosque-islamabad/,,2026-10-15,no
+isb_monument,islamabad,Pakistan Monument,monument,history|art|family,200,2000,60,33.6932,73.0687,1,evening,10:00,20:00,3,,Pakistan Monument,Petal-shaped national monument on Shakarparian hill with city views.,https://lokvirsa.org.pk/museums/pakistan-monument-museum/,https://lokvirsa.org.pk/museums/pakistan-monument-museum/,2026-10-15,yes
+isb_lok_virsa,islamabad,Lok Virsa Museum,museum,art|history|family,200,2000,90,33.6896,73.0756,0,midday,10:00,18:00,2,,Lok Virsa Museum,"Museum of folk heritage with crafts, costumes and music from every region.",https://lokvirsa.org.pk/?p=8187,,2026-10-15,yes
+isb_daman_e_koh,islamabad,Daman-e-Koh,viewpoint,nature|family,0,0,60,33.7380,73.0570,1,morning,08:00,22:00,3,,Daman-e-Koh,Hillside viewpoint over Islamabad in the Margalla Hills.,,,,no
+isb_pir_sohawa,islamabad,Pir Sohawa,viewpoint,nature|food,1000,1000,120,33.7620,73.0990,1,evening,11:00,23:30,2,,Pir Sohawa,Hilltop restaurants above the city with sunset views.,,,,no
+isb_trail_3,islamabad,Margalla Trail 3,hiking trail,adventure|nature,0,0,150,33.7385,73.0739,1,morning,06:00,17:00,3,,Margalla Hills National Park,Popular steep hike from F-6 to the Daman-e-Koh ridge.,,,,no
+isb_trail_5,islamabad,Margalla Trail 5,hiking trail,adventure|nature,0,0,150,33.7360,73.0830,1,morning,06:00,17:00,2,,Margalla Hills National Park,Shaded trail along a stream in the Margalla Hills.,,,,no
+isb_rose_garden,islamabad,Rose and Jasmine Garden,garden,nature|family,0,0,60,33.7005,73.0800,1,morning,07:00,20:00,2,,Rose and Jasmine Garden,Formal garden with hundreds of rose varieties near Shakarparian.,,,,no
+isb_lake_view,islamabad,Lake View Park,park,nature|family|adventure,100,100,120,33.7110,73.1300,1,morning,09:00,22:00,2,,Lake View Park,"Lakeside park with a bird aviary, boating and play areas.",,,,no
+isb_rawal_lake,islamabad,Rawal Lake,lake,nature,0,0,60,33.7000,73.1280,1,evening,07:00,21:00,2,,Rawal Lake,Reservoir with walking paths and evening views.,,,,no
+isb_f9_park,islamabad,Fatima Jinnah Park,park,nature|family,0,0,75,33.7000,73.0250,1,morning,06:00,22:00,2,,Fatima Jinnah Park,"One of the largest city parks in Asia, in sector F-9.",,,,no
+isb_saidpur,islamabad,Saidpur Village,heritage village,history|food|art,500,500,90,33.7406,73.0645,1,any,10:00,23:00,3,,Saidpur,"Restored Mughal-era village with temples, galleries and restaurants.",,,,no
+isb_shah_allah_ditta,islamabad,Shah Allah Ditta Caves,caves,history|adventure,0,0,90,33.7188,72.9245,1,morning,08:00,17:00,2,,Shah Allah Ditta,Ancient Buddhist-era caves and a banyan grove at the edge of the hills.,,,,no
+isb_centaurus,islamabad,Centaurus Mall,mall,shopping|family|food,500,500,120,33.7078,73.0505,0,midday,11:00,23:00,1,,Centaurus,"Large mall in F-8 with brands, a food court and a play zone.",,,,no
+isb_jinnah_super,islamabad,Jinnah Super Market,market,shopping|food,300,300,75,33.7213,73.0560,1,evening,11:00,22:00,2,,Jinnah Super Market,"F-7 market with bookshops, cafes and clothing stores.",,,,no
+isb_kohsar,islamabad,Kohsar Market,market,food|shopping,800,800,75,33.7300,73.0720,1,evening,10:00,23:00,1,,,Small leafy market in F-6 known for cafes and bakeries.,,,,no
+isb_natural_history,islamabad,Pakistan Museum of Natural History,museum,family|nature,50,50,75,33.6948,73.0790,0,midday,10:00,17:00,1,,Pakistan Museum of Natural History,"Fossils, gems and wildlife displays including a blue whale skeleton.",,,,no
+isb_golra_museum,islamabad,Golra Sharif Railway Museum,museum,history|family,200,200,75,33.6698,72.9919,1,morning,09:00,16:00,2,,Golra Sharif Railway Museum,Railway heritage museum with old locomotives and carriages.,,,,no
+isb_golra_shrine,islamabad,Golra Sharif Shrine,shrine,spiritual,0,0,45,33.6860,72.9960,1,evening,00:00,23:59,1,,Golra Sharif,Shrine of Pir Meher Ali Shah in the village of Golra.,,,,no
+isb_bari_imam,islamabad,Bari Imam Shrine,shrine,spiritual,0,0,45,33.7465,73.1270,1,evening,00:00,23:59,2,,Bari Imam,Shrine of the seventeenth-century Sufi saint at Noorpur Shahan.,,,,no
+isb_shakarparian,islamabad,Shakarparian Park,park,nature|family,0,0,60,33.6920,73.0740,1,morning,07:00,21:00,2,,Shakarparian,Hilly park with terraced gardens and views of Islamabad and Rawalpindi.,,,,no
+isb_taxila,islamabad,Taxila Museum,museum,history|art,20,500,120,33.7454,72.8193,0,midday,09:00,16:00,2,,Taxila Museum,Gandhara art and finds from the UNESCO site of Taxila.,https://www.zameen.com/blog/taxila-museum-guide.html,https://www.zameen.com/blog/taxila-museum-guide.html,2026-10-15,no
+isb_giga_mall,islamabad,Giga Mall,mall,shopping|family,500,500,120,33.5230,73.1560,0,midday,11:00,23:00,1,,Giga Mall,"Large mall on GT Road with shops, cinema and indoor rides.",,,,no
+isb_melody,islamabad,Melody Food Park,food street,food,500,500,75,33.7085,73.0838,1,evening,17:00,23:59,2,,,Open-air food park in G-6 with traditional dishes and BBQ.,,,,no
+khi_mazar,karachi,Mazar-e-Quaid,monument,history|spiritual,30,30,60,24.8752,67.0409,1,evening,09:00,17:00,3,,Mazar-e-Quaid,White marble mausoleum of Muhammad Ali Jinnah with landscaped grounds.,https://propakistani.pk/2024/04/03/sindh-high-court-dismisses-petition-for-removing-entrance-fees-at-quaid-i-azam-mausoleum/amp/,https://www.brecorder.com/news/208949,2026-10-15,no
+khi_clifton_beach,karachi,Clifton Beach,beach,nature|family|food,300,300,120,24.7908,67.0425,1,evening,06:00,23:00,3,,Clifton Beach,"Sea View beachfront with camel rides, snacks and sunsets.",,,,no
+khi_do_darya,karachi,Do Darya,food street,food,1200,1200,90,24.7845,67.0775,1,evening,18:00,23:59,2,,,Seafront restaurants on the Arabian Sea in DHA Phase 8.,,,,no
+khi_mohatta,karachi,Mohatta Palace,museum,art|history,100,100,75,24.8137,67.0349,0,midday,11:00,18:00,3,,Mohatta Palace,"1920s palace in pink Jodhpur stone, now a museum of art and heritage.",https://wanderlog.com/list/geo/288/top-places-to-visit-in-karachi,,2026-10-15,no
+khi_frere_hall,karachi,Frere Hall,landmark,history|art,0,0,45,24.8478,67.0331,1,morning,09:00,17:00,2,,Frere Hall,Venetian Gothic hall with Sadequain ceiling murals and gardens.,,,,no
+khi_national_museum,karachi,National Museum of Pakistan,museum,history|art,20,300,90,24.8582,67.0215,0,midday,10:00,17:00,2,,National Museum of Pakistan,Collections from the Indus Valley to the independence movement.,https://www.graana.com/blog/tag/national-museum-karachi-ticket-price,,2026-10-15,no
+khi_empress,karachi,Empress Market,market,shopping|history|food,300,300,60,24.8620,67.0300,1,morning,08:00,20:00,2,,Empress Market,Victorian market building in Saddar full of spices and stalls.,,,,no
+khi_maritime,karachi,Pakistan Maritime Museum,museum,history|family,300,300,120,24.8790,67.0920,1,morning,10:00,18:00,2,,Pakistan Maritime Museum,"Naval museum with a submarine, ships and a park.",,,,no
+khi_paf_museum,karachi,PAF Museum,museum,history|family|adventure,300,300,120,24.8872,67.0973,1,any,10:00,22:00,2,,PAF Museum Karachi,Aircraft and aviation history in a large open park.,,,,no
+khi_port_grand,karachi,Port Grand,food street,food|family,800,800,120,24.8460,66.9940,1,evening,17:00,23:59,2,,Port Grand,Food and entertainment strip on the old Native Jetty Bridge.,,,,no
+khi_dolmen,karachi,Dolmen Mall Clifton,mall,shopping|family|food,500,500,120,24.8027,67.0295,0,midday,11:00,23:00,2,,Dolmen Mall,"Seafront mall with brands, cinema and a food court.",,,,no
+khi_abdullah_shah,karachi,Abdullah Shah Ghazi Shrine,shrine,spiritual,0,0,45,24.8106,67.0301,1,evening,00:00,23:59,2,,Abdullah Shah Ghazi,Shrine of Karachi's patron saint on a hill in Clifton.,,,,no
+khi_burns_road,karachi,Burns Road Food Street,food street,food|history,500,500,90,24.8590,67.0180,1,evening,18:00,23:59,3,,Burns Road,"Historic street famous for nihari, haleem, rabri and kebabs.",,,,no
+khi_manora,karachi,Manora Island,island,nature|adventure|history,1500,1500,180,24.7975,66.9831,1,any,09:00,18:00,2,,Manora,"Boat ride across the harbour to a beach, lighthouse and old temple.",,,,no
+khi_sandspit,karachi,Sandspit Beach,beach,nature|family,300,300,150,24.8390,66.8990,1,evening,08:00,20:00,2,,Sandspit Beach,Quieter beach with huts and a turtle nesting area.,,,,no
+khi_hawkes_bay,karachi,Hawke's Bay Beach,beach,nature|adventure,500,500,150,24.8670,66.8610,1,evening,08:00,20:00,1,,Hawke's Bay Beach,"Wide sandy beach west of the city, known for sea turtles.",,,,no
+khi_chaukhandi,karachi,Chaukhandi Tombs,tombs,history|art,200,200,75,24.8653,67.2880,1,morning,08:00,17:00,2,,Chaukhandi tombs,Carved sandstone tombs from the fifteenth to eighteenth centuries.,,,,no
+khi_flagstaff,karachi,Quaid-e-Azam House,museum,history,20,300,45,24.8467,67.0379,0,morning,09:00,17:00,1,,Flagstaff House,"Jinnah's former residence, now a museum with his belongings.",https://antiquities.sindhculture.gov.pk/tour/quaid-e-azam-house-museum-karachi/,https://antiquities.sindhculture.gov.pk/tour/quaid-e-azam-house-museum-karachi/,2026-10-15,yes
+khi_wazir_mansion,karachi,Wazir Mansion,museum,history,50,50,45,24.8545,66.9967,0,morning,09:00,16:00,1,,Wazir Mansion,"Birthplace of Muhammad Ali Jinnah in Kharadar, now a museum.",,,,no
+khi_aladdin,karachi,Aladdin Park,amusement park,family|adventure,1500,1500,150,24.9040,67.1100,1,evening,15:00,23:00,2,,Aladdin Amusement Park,"Amusement park with rides, a water park and an arcade.",,,,no
+khi_safari,karachi,Safari Park Karachi,safari park,family|nature,200,200,120,24.9290,67.1180,1,morning,09:00,17:00,1,,"Safari Park, Karachi","Large park with a zoo, chairlift and open lawns in Gulshan.",,,,no
+khi_zoo,karachi,Karachi Zoo,zoo,family|nature,100,100,120,24.8747,67.0254,1,morning,08:00,17:00,1,,Karachi Zoo,Historic zoo and gardens in Garden East.,,,,no
+khi_napa,karachi,National Academy of Performing Arts,arts centre,art,500,500,90,24.8480,67.0290,0,evening,10:00,22:00,1,,National Academy of Performing Arts,Theatre and music performances in the old Hindu Gymkhana building.,,,,no
+khi_tooba,karachi,Masjid-e-Tooba,mosque,spiritual|art,0,0,45,24.8227,67.0680,1,any,08:00,21:00,2,,Tooba Mosque,Mosque with one of the largest single-dome prayer halls in the world.,,,,no
+khi_st_patricks,karachi,St. Patrick's Cathedral,church,spiritual|art|history,0,0,30,24.8550,67.0336,0,any,09:00,17:00,1,,"St. Patrick's Cathedral, Karachi",Gothic Revival cathedral from 1881 in Saddar.,,,,no
+khi_zainab,karachi,Zainab Market,market,shopping,300,300,75,24.8530,67.0290,1,evening,11:00,22:00,1,,Zainab Market,"Saddar market for clothes, leather and handicrafts at bargain prices.",,,,no
+khi_bagh_ibn_qasim,karachi,Bagh Ibn-e-Qasim,park,nature|family,0,0,60,24.8128,67.0365,1,evening,06:00,22:00,2,,Bagh Ibne Qasim,Large seafront park in Clifton next to the Abdullah Shah Ghazi shrine.,,,,no
+bwp_derawar_fort,bahawalpur,Derawar Fort,fort,history|art,100,500,90,28.767278,71.333861,1,morning,09:00,17:00,3,,Derawar Fort,"Large square fortress in Punjab, Pakistan.",,,2026-10-15,no
+bwp_tomb_of_bibi_jawindi,bahawalpur,tomb of Bibi Jawindi,shrine,spiritual|history,0,0,45,29.240917,71.052500,1,evening,06:00,22:00,3,,Tomb of Bibi Jawindi,"Ruined tomb in Punjab, Pakistan.",,,2026-10-15,no
+bwp_lal_suhanra_national_park,bahawalpur,Lal Suhanra National Park,national park,nature|adventure,100,500,180,29.316667,71.916667,1,morning,07:00,17:00,3,,Lal Suhanra National Park,"National park in Punjab, Pakistan.",,,2026-10-15,no
+bwp_noor_mahal,bahawalpur,Noor Mahal,palace,history|art,500,500,75,29.379444,71.668056,0,morning,09:00,17:00,3,,Noor Mahal,"Palace in Bahawalpur, Punjab, Pakistan.",https://www.urlop.pl/przewodnik/pakistan/bahawalpur/,,2026-10-15,no
+bwp_abbasi_mosque,bahawalpur,Abbasi Mosque,mosque,spiritual|history|art,0,0,45,28.767500,71.336944,1,any,06:00,21:00,2,,Abbasi Mosque,"Mosque in Punjab, Pakistan.",,,2026-10-15,no
+bwp_tomb_of_baha_al_halim,bahawalpur,tomb of Baha'al-Halim,shrine,spiritual|history,0,0,45,29.240556,71.052222,1,evening,06:00,22:00,2,,Shrine of Baha'al-Halim,"Ruined tomb in Punjab, Pakistan.",,,2026-10-15,no
+bwp_bahawalpur_central_library,bahawalpur,Bahawalpur Central Library,landmark,history|art,0,0,45,29.391017,71.684933,1,any,08:00,20:00,2,,Bahawalpur Central Library,"Library in Bahawalpur, Pakistan.",,,2026-10-15,no
+bwp_darbar_mahal,bahawalpur,Darbar Mahal,palace,history|art,100,500,75,29.397222,71.699722,0,morning,09:00,17:00,2,,Darbar Mahal,"Palace in Bahawalpur, Punjab, Pakistan.",,,2026-10-15,no
+bwp_bahawalpur_museum,bahawalpur,Bahawalpur Museum,museum,history|art,10,10,90,29.390000,71.685556,0,midday,09:00,16:00,2,,Bahawalpur Museum,"Museum in Bahawalpur, Pakistan.",https://destinations.com.pk/?p=6727,https://destinations.com.pk/?p=6727,2026-10-15,no
+bwp_al_sadiq_mosque,bahawalpur,Al-Sadiq Mosque,mosque,spiritual|history|art,0,0,45,29.395833,71.674167,1,any,06:00,21:00,2,,"Al-Sadiq Mosque, Bahawalpur","Mosque in Bahawalpur, Punjab, Pakistan.",,,2026-10-15,no
+bwp_shrine_of_jalaluddin_bukhari,bahawalpur,shrine of Jalaluddin Bukhari,shrine,spiritual|history,0,0,45,29.240139,71.052861,1,evening,06:00,22:00,2,,Shrine of Jalaluddin Bukhari,"Shrine with attached mosque in Punjab, Pakistan.",,,2026-10-15,no
+bwp_bahawalpur_zoo,bahawalpur,Bahawalpur Zoo,zoo,family|nature,50,50,120,29.402500,71.681667,1,morning,08:00,17:00,2,,Bahawalpur Zoo,"Zoo in Bahawalpur, Pakistan.",,,2026-10-15,no
+bwp_gulzar_mahal,bahawalpur,Gulzar Mahal,palace,history|art,100,500,75,29.394722,71.697500,0,morning,09:00,17:00,2,,Gulzar Mahal,"Palace in Bahawalpur, Punjab, Pakistan.",,,2026-10-15,no
+bwp_shrine_of_nuriya,bahawalpur,Shrine of Nuriya,monument,history,0,0,45,29.240472,71.052417,1,any,08:00,20:00,2,,Shrine of Nuriya,"Monument in Uch, Pakistan.",,,2026-10-15,no
+bwp_fareed_gate,bahawalpur,Fareed Gate,monument,history,0,0,45,29.395722,71.683278,1,any,08:00,20:00,2,,Fareed Gate,"One of the historic gates of the Old City of Bahawalpur, Pakistan.",,,2026-10-15,no
+bwp_nishat_mahal,bahawalpur,Nishat Mahal,palace,history|art,100,500,75,29.397682,71.701290,0,morning,09:00,17:00,2,,Nishat Mahal,"Building in Punjab, Pakistan.",,,2026-10-15,no
+bwp_empress_bridge,bahawalpur,Empress Bridge,landmark,adventure,0,0,45,29.447152,71.653175,1,any,08:00,20:00,2,,Empress Bridge,"Bridge in Punjab, Pakistan.",,,2026-10-15,no
+bwp_shrine_of_jahaniyan_jahangas,bahawalpur,shrine of Jahaniyan Jahangasht,shrine,spiritual|history,0,0,45,29.242889,71.055361,1,evening,06:00,22:00,1,,,"Shrine with attached mosque in Punjab, Pakistan.",,,2026-10-15,no
+bwp_farukh_mahal,bahawalpur,Farukh  Mahal,palace,history|art,100,500,75,29.396600,71.702323,0,morning,09:00,17:00,1,,,,,,2026-10-15,no
+hun_attabad_lake,hunza,Attabad Lake,lake,nature|adventure,500,500,150,36.336839,74.867533,1,morning,07:00,18:00,3,,Attabad Lake,"Lake in Gilgit-Baltistan, Pakistan.",https://wanderlog.com/place/details/68363,,2026-10-15,no
+hun_baltit_fort,hunza,Baltit Fort,fort,history|art,600,1000,90,36.325556,74.669722,1,morning,09:00,17:00,3,,Baltit Fort,Fort in Pakistan.,https://wanderlog.com/place/details/67702,,2026-10-15,no
+hun_borith_lake,hunza,Borith Lake,lake,nature|adventure,0,0,150,36.430400,74.862500,1,morning,07:00,18:00,2,jeep,Borith Lake,"Lake in Gilgit-Baltistan, Pakistan.",,,2026-10-15,no
+hun_altit_fort,hunza,Altit Fort,fort,history|art,1600,1600,90,36.316880,74.682090,1,morning,09:00,17:00,2,,Altit Fort,Fort in Pakistan.,https://en.wikipedia.org/wiki/Altit_Fort,,2026-10-15,no
+hun_sacred_rock_of_hunza,hunza,Sacred Rock of Hunza,heritage site,history,50,400,60,36.313182,74.686035,1,morning,08:00,17:00,2,,Sacred Rock of Hunza,"Predominantly Buddhist ancient Indian cultural site in Gilgit−Baltistan, Pakistan.",,,2026-10-15,no
+hun_hussaini_suspension_bridge,hunza,Hussaini Suspension Bridge,landmark,adventure,0,0,45,36.423611,74.882500,1,any,08:00,20:00,2,,Hussaini Suspension Bridge,"Footbridge in Gilgit-Baltistan, Pakistan.",,,2026-10-15,no
+hun_passu_glacier,hunza,Passu Glacier,glacier,nature|adventure,0,0,150,36.466667,74.766667,1,morning,07:00,16:00,2,,Passu Glacier,Glacier in Pakistan.,,,2026-10-15,no
+hun_ghulkin_glacier,hunza,Ghulkīn Glacier,glacier,nature|adventure,0,0,150,36.427700,74.810100,1,morning,07:00,16:00,1,,,Glacier in Pakistan.,,,2026-10-15,no
+hun_gulmit_glacier,hunza,Gulmit Glacier,glacier,nature|adventure,0,0,150,36.407600,74.790800,1,morning,07:00,16:00,1,,,Glacier in Pakistan.,,,2026-10-15,no
+hun_eagles_nest,hunza,Eagle’s Nest,viewpoint,nature,0,0,45,36.323873,74.690502,1,evening,06:00,19:00,1,,,,,,2026-10-15,no
+hun_ganesh_rock_carving,hunza,Ganesh Rock Carving,heritage site,history,50,400,60,36.313182,74.686035,1,morning,08:00,17:00,1,,,,,,2026-10-15,no
+hun_garnish,hunza,Garnish,heritage site,history,50,400,60,36.313145,74.668771,1,morning,08:00,17:00,1,,,,,,2026-10-15,no
+hun_cultural_museum_gulmit,hunza,Cultural Museum Gulmit,museum,history|art,50,500,90,36.389259,74.865237,0,midday,09:00,16:30,1,,,,,,2026-10-15,no
+hun_black_glacier_viewpoint,hunza,Black Glacier Viewpoint,viewpoint,nature,0,0,45,36.414523,74.865444,1,evening,06:00,19:00,1,,,,,,2026-10-15,no
+hun_attabad_lake_viewpoint,hunza,Attabad lake viewpoint,viewpoint,nature,0,0,45,36.312941,74.865172,1,evening,06:00,19:00,1,,,,,,2026-10-15,no
+hun_passu_cones_viewpoint,hunza,Passu Cones Viewpoint,viewpoint,nature,0,0,45,36.492570,74.880730,1,evening,06:00,19:00,1,,,Scenic viewpoint in Pakistan.,,,2026-10-15,no
+hun_ondra_fort,hunza,Ondra Fort,heritage site,history,50,400,60,36.394966,74.860163,1,morning,08:00,17:00,1,,,,,,2026-10-15,no
+hun_passu_lake,hunza,Passu lake,lake,nature|adventure,0,0,150,36.457138,74.879935,1,morning,07:00,18:00,1,,,,,,2026-10-15,no
+hun_hopar_glacier,hunza,Hopar Glacier,glacier,nature|adventure,0,0,150,36.160159,74.736490,1,morning,07:00,16:00,1,jeep,,,,,2026-10-15,no
+hun_queen_victoria_memorial,hunza,Queen Victoria Memorial,viewpoint,nature,0,0,45,36.334767,74.672754,1,evening,06:00,19:00,1,,,,,,2026-10-15,no
+hun_ultar_meadows,hunza,Ultar Meadows,valley,nature|adventure,0,0,120,36.353802,74.677959,1,morning,07:00,18:00,1,,,,,,2026-10-15,no
+klm_mahodand_lake,kalam,Mahodand Lake,lake,nature|adventure,0,0,150,35.708611,72.653333,1,morning,07:00,18:00,2,jeep,Mahodand Lake,"Lake in Khyber Pakhtunkhwa, Pakistan.",,,2026-10-15,no
+klm_kundol_lake,kalam,Kundol Lake,lake,nature|adventure,0,0,150,35.418889,72.433056,1,morning,07:00,18:00,2,jeep,Kundol Lake,Lake in Pakistan.,,,2026-10-15,no
+klm_paristan_lake,kalam,Paristan Lake,lake,nature|adventure,0,0,150,35.406500,72.413800,1,morning,07:00,18:00,2,jeep,Paristan Lake,Lake in Pakistan.,,,2026-10-15,no
+klm_izmis_lake,kalam,Izmis Lake,lake,nature|adventure,0,0,150,35.400000,72.376944,1,morning,07:00,18:00,2,jeep,Izmis Lake,"Lake in Khyber Pakhtunkhwa, Pakistan.",,,2026-10-15,no
+klm_pari_lake,kalam,Pari Lake,lake,nature|adventure,0,0,150,35.402222,72.412778,1,morning,07:00,18:00,2,jeep,Pari Lake,Lake in Pakistan.,,,2026-10-15,no
+klm_godar_dhand,kalam,Godar Dhand,lake,nature|adventure,0,0,90,35.423060,72.514720,1,morning,07:00,18:00,1,,,"Lake in Khyber Pakhtunkhwa, Pakistan.",,,2026-10-15,no
+klm_ushu_valley,kalam,Ushu Valley,valley,nature|adventure,0,0,150,35.685556,72.668611,1,morning,07:00,18:00,1,jeep,,"Valley in Khyber Pakhtunkhwa, Pakistan.",,,2026-10-15,no
+klm_desan_meadows,kalam,Desan Meadows,viewpoint,nature,0,0,45,35.465191,72.518272,1,evening,06:00,19:00,1,,,,,,2026-10-15,no
+klm_chuklelain_glacier,kalam,Chuklelain Glacier,glacier,nature|adventure,0,0,150,35.394373,72.758255,1,morning,07:00,16:00,1,,,,,,2026-10-15,no
+klm_tikki_glacier,kalam,Tikki Glacier,glacier,nature|adventure,0,0,150,35.410491,72.817771,1,morning,07:00,16:00,1,,,,,,2026-10-15,no
+klm_gorshai_glacier,kalam,Gorshai Glacier,glacier,nature|adventure,0,0,120,35.495176,72.708107,1,morning,07:00,16:00,1,,,,,,2026-10-15,no
+klm_janshae_meadows,kalam,Janshae Meadows,valley,nature|adventure,0,0,120,35.556969,72.590692,1,morning,07:00,18:00,1,,,,,,2026-10-15,no
+mux_tomb_of_shah_rukn_e_alam,multan,Tomb of Shah Rukn-e-Alam,shrine,spiritual|history,0,0,45,30.198900,71.471400,1,evening,06:00,22:00,3,,Tomb of Shah Rukn-e-Alam,"Mausoleum of the Sufi saint Sheikh Rukn-ud-Din Abul Fateh in Multan, Pakistan.",,,2026-10-15,no
+mux_prahladpuri_temple_multan,multan,"Prahladpuri Temple, Multan",heritage site,history,50,400,60,30.197778,71.469722,1,morning,08:00,17:00,2,,Prahladpuri Temple,"Destroyed Hindu temple in Multan, Pakistan.",,,2026-10-15,no
+mux_shahi_eid_gah_mosque,multan,Shahi Eid Gah Mosque,mosque,spiritual|history|art,0,0,45,30.210794,71.478939,1,any,06:00,21:00,2,,Shahi Eid Gah Mosque,Mosque in Pakistan.,,,2026-10-15,no
+mux_shrine_of_bahauddin_zakariya,multan,shrine of Bahauddin Zakariya,shrine,spiritual|history,0,0,45,30.200556,71.476389,1,evening,06:00,22:00,2,,Shrine of Bahauddin Zakariya,"Tomb in Multan, Pakistan.",,,2026-10-15,no
+mux_multan_fort,multan,Multan Fort,fort,history|art,100,500,90,30.198889,71.473333,1,morning,09:00,17:00,2,,Multan Fort,"Former fort in Multan, Pakistan.",,,2026-10-15,no
+mux_cathedral_of_the_holy_redeem,multan,Cathedral of the Holy Redeemer,church,spiritual|history|art,0,0,40,30.182500,71.431667,0,morning,09:00,17:00,2,,Cathedral of the Holy Redeemer,Church in Pakistan.,,,2026-10-15,no
+mux_tomb_of_shah_ali_akbar,multan,tomb of Shah Ali Akbar,shrine,spiritual|history,0,0,45,30.217778,71.437778,1,evening,06:00,22:00,2,,Tomb of Shah Ali Akbar,"Tomb in Multan, Pakistan.",,,2026-10-15,no
+mux_ali_muhammad_khan_mosque,multan,Ali Muhammad Khan Mosque,mosque,spiritual|history|art,0,0,45,30.193767,71.473295,1,any,06:00,21:00,2,,Ali Muhammad Khan Mosque,"Mosque in Multan, Punjab, Pakistan.",,,2026-10-15,no
+mux_shrine_of_shamsuddin_sabzwar,multan,shrine of Shamsuddin Sabzwari,shrine,spiritual|history,0,0,45,30.201111,71.484167,1,evening,06:00,22:00,1,,,"Tomb in Multan, Pakistan.",,,2026-10-15,no
+mux_saint_mary_s_cathedral_multa,multan,"Saint Mary's Cathedral, Multan",church,spiritual|history|art,0,0,40,30.190560,71.437140,0,morning,09:00,17:00,2,,"Saint Mary's Cathedral, Multan","Church in Punjab, Pakistan.",,,2026-10-15,no
+mux_al_muzaffar_mosque,multan,Al-Muzaffar Mosque,mosque,spiritual|history|art,0,0,45,30.198889,71.470000,1,any,06:00,21:00,1,,,Mosque in Pakistan.,,,2026-10-15,no
+mux_tomb_of_mai_maharban_multan,multan,"Tomb of Mai Maharban, Multan",shrine,spiritual|history,0,0,45,30.196389,71.463056,1,evening,06:00,22:00,1,,,,,,2026-10-15,no
+mux_bab_e_qasim,multan,Bab-e-Qasim,monument,history,0,0,45,30.198611,71.470833,1,any,08:00,20:00,1,,,"Gate in Multan, Pakistan.",,,2026-10-15,no
+mux_chaman_zar_e_askari,multan,Chaman Zar-E-Askari,park,nature|family,30,30,60,30.178649,71.413493,1,evening,07:00,21:00,1,,,,,,2026-10-15,no
+mux_delhi_gate_bazar,multan,Delhi Gate Bazar,market,shopping|food,0,0,90,30.192347,71.478711,1,evening,11:00,21:00,1,,,,,,2026-10-15,no
+mux_360_zoo,multan,360 Zoo,zoo,family|nature,50,50,120,30.291678,71.523515,1,morning,08:00,17:00,1,,,,,,2026-10-15,no
+mux_qasim_gate,multan,Qasim Gate,monument,history,0,0,45,30.198715,71.470703,1,any,08:00,20:00,1,,,,,,2026-10-15,no
+mux_shrine_of_inayat_wilayat,multan,Shrine of Inayat Wilayat,shrine,spiritual|history,0,0,45,30.190048,71.469780,1,evening,06:00,22:00,1,,,,,,2026-10-15,no
+mux_shrine_of_peer_ghazi_jamal,multan,Shrine of Peer Ghazi Jamal,shrine,spiritual|history,0,0,45,30.191591,71.467178,1,evening,06:00,22:00,1,,,,,,2026-10-15,no
+mux_qasim_bagh,multan,Qasim Bagh,park,nature|family,30,30,60,30.198652,71.475724,1,evening,07:00,21:00,1,,,,,,2026-10-15,no
+mux_vans_agnew_monument,multan,Vans Agnew Monument,monument,history,0,0,45,30.198714,71.474835,1,any,08:00,20:00,1,,,,,,2026-10-15,no
+mux_shrine_complex_of_hafiz_jama,multan,Shrine Complex of Hafiz Jamal Multani,shrine,spiritual|history,0,0,45,30.195326,71.485398,1,evening,06:00,22:00,1,,,,,,2026-10-15,no
+mux_daulat_gate,multan,Daulat Gate,monument,history,0,0,45,30.197768,71.478553,1,any,08:00,20:00,1,,,,,,2026-10-15,no
+mux_ghanta_ghar_clock_tower,multan,Ghanta Ghar (Clock Tower),monument,history,0,0,45,30.198768,71.467866,1,any,08:00,20:00,1,,,,,,2026-10-15,no
+mux_tomb_of_shah_yousuf_gardezi,multan,Tomb of Shah Yousuf Gardezi,shrine,spiritual|history,0,0,45,30.194785,71.466489,1,evening,06:00,22:00,1,,,,,,2026-10-15,no
+mux_tomb_complex_of_bibi_pak_dam,multan,Tomb Complex of Bibi Pak Daman,shrine,spiritual|history,0,0,45,30.178661,71.464151,1,evening,06:00,22:00,1,,,,,,2026-10-15,no
+mur_ayubia_national_park,murree,Ayubia National Park,national park,nature|adventure,100,500,180,34.062778,73.427778,1,morning,07:00,17:00,3,,Ayubia National Park,"National park in Khyber Pakhtunkhwa, Pakistan.",,,2026-10-15,no
+mur_mukeshpuri,murree,Mukeshpuri,adventure,adventure|family,500,500,120,34.061667,73.430278,1,morning,09:00,17:00,1,,Mushkpuri Top,"Mountain in Khyber Pakhtunkhwa, Pakistan.",,,2026-10-15,no
+mur_nathia_gali,murree,Nathia Gali,viewpoint,nature,0,0,45,34.068870,73.398970,1,evening,06:00,19:00,1,,Nathia Gali,"Union council and hill station in Khyber Pakhtunkhwa, Pakistan.",,,2026-10-15,no
+mur_miranjani,murree,Miranjani,adventure,adventure|family,500,500,120,34.108333,73.405556,1,morning,09:00,17:00,1,,Miranjani,"Mountain in Khyber Pakhtunkhwa, Pakistan.",,,2026-10-15,no
+mur_bhurban,murree,Bhurban,viewpoint,nature,0,0,45,33.943333,73.446389,1,evening,06:00,19:00,1,,Bhurban,"Village in Punjab, Pakistan.",,,2026-10-15,no
+mur_murree_wildlife_park,murree,Murree Wildlife Park,national park,nature|adventure,100,500,180,33.895172,73.368351,1,morning,07:00,17:00,2,,Murree Wildlife Park,Zoo in Pakistan.,,,2026-10-15,no
+mur_panjpeer_rocks,murree,Panjpeer Rocks,viewpoint,nature,0,0,45,33.733190,73.523705,1,evening,06:00,19:00,2,,Panjpeer Rocks,"Cliff in Punjab, Pakistan.",,,2026-10-15,no
+mur_pindi_point,murree,Pindi Point,viewpoint,nature,0,0,45,33.894944,73.368194,1,evening,06:00,19:00,2,,Pindi Point,Scenic viewpoint in Pakistan.,,,2026-10-15,no
+mur_dunga_gali_pass,murree,Dunga Gali Pass,valley,nature|adventure,0,0,120,34.057222,73.412500,1,morning,07:00,18:00,1,,,,,,2026-10-15,no
+mur_ayubia_chairlift,murree,Ayubia chairlift,adventure,adventure|family,500,500,120,34.028889,73.404167,1,morning,09:00,17:00,1,,,"Chairlift in Ayubia National Park, Pakistan.",,,2026-10-15,no
+mur_patriata_chairlift,murree,Patriata chairlift,adventure,adventure|family,500,500,120,33.874111,73.458056,1,morning,09:00,17:00,1,,,"Chairlift at Patriata in Punjab, Pakistan.",,,2026-10-15,no
+mur_pindi_point_chairlift,murree,Pindi Point chairlift,adventure,adventure|family,500,500,120,33.893000,73.378167,1,morning,09:00,17:00,1,,,"Chairlift in Murree, Pakistan.",,,2026-10-15,no
+mur_kashmir_point,murree,Kashmir Point,viewpoint,nature,0,0,45,33.917398,73.411047,1,evening,06:00,19:00,1,,,,,,2026-10-15,no
+mur_sozo_adventure_park,murree,Sozo Adventure Park,adventure,adventure|family,500,500,120,33.890236,73.432059,1,morning,09:00,17:00,1,,,,,,2026-10-15,no
+mur_umbrella_waterfalls,murree,Umbrella Waterfalls,waterfall,nature|adventure,0,0,60,33.994612,73.294304,1,midday,07:00,18:00,1,,,,,,2026-10-15,no
+pew_mohabbat_khan_mosque,peshawar,Mohabbat Khan Mosque,mosque,spiritual|history|art,0,0,45,34.010650,71.573181,1,any,06:00,21:00,3,,Mahabat Khan Mosque,"Mosque in Peshawar, Pakistan.",,,2026-10-15,no
+pew_bala_hisar_fort,peshawar,Bala Hisar Fort,fort,history|art,100,500,90,34.012778,71.569722,1,morning,09:00,17:00,3,,"Bala Hissar, Peshawar",Historic fortress in Peshawar.,,,2026-10-15,no
+pew_peshawar_museum,peshawar,Peshawar Museum,museum,history|art,50,500,90,34.007747,71.558262,0,midday,09:00,16:30,3,,Peshawar Museum,"Museum in Peshawar, Pakistan.",,,2026-10-15,no
+pew_kanishka_stupa,peshawar,Kanishka stupa,heritage site,history,50,400,60,33.999167,71.591944,1,morning,08:00,17:00,2,,Kanishka Stupa,"Stupa on the outskirts of Peshawar, Pakistan.",,,2026-10-15,no
+pew_all_saints_church_peshawar,peshawar,"All Saints Church, Peshawar",church,spiritual|history|art,0,0,40,34.005300,71.571200,0,morning,09:00,17:00,2,,"All Saints Church, Peshawar","Church building in Peshawar, Pakistan.",,,2026-10-15,no
+pew_gorkhatri,peshawar,Gorkhatri,heritage site,history,50,400,60,34.008611,71.581111,1,morning,08:00,17:00,2,,Gor Khatri,"Archaeological site in Peshawar, Pakistan.",,,2026-10-15,no
+pew_qasim_ali_khan_mosque,peshawar,Qasim Ali Khan Mosque,mosque,spiritual|history|art,0,0,45,34.009381,71.571181,1,any,06:00,21:00,2,,Qasim Ali Khan Mosque,Mosque in Pakistan.,,,2026-10-15,no
+pew_kalibari_mandir_peshawar,peshawar,"Kalibari Mandir, Peshawar",church,spiritual|history|art,0,0,40,34.016667,71.583333,0,morning,09:00,17:00,2,,"Kalibari Mandir, Peshawar","Hindu temple in Peshawar, Pakistan.",,,2026-10-15,no
+pew_dargah_pir_ratan_nath_jee,peshawar,Dargah Pir Ratan Nath Jee,church,spiritual|history|art,0,0,40,34.016667,71.583333,0,morning,09:00,17:00,2,,Dargah Pir Ratan Nath Jee,"Hindu temple in Peshawar, Pakistan.",,,2026-10-15,no
+pew_sunehri_mosque_peshawar,peshawar,"Sunehri Mosque, Peshawar",mosque,spiritual|history|art,0,0,45,33.996000,71.540100,1,any,06:00,21:00,2,,"Sunehri Mosque, Peshawar",Mosque in Peshawar.,,,2026-10-15,no
+pew_cunningham_clock_tower,peshawar,Cunningham Clock Tower,monument,history,0,0,45,34.009722,71.575556,1,any,08:00,20:00,2,,Cunningham Clock Tower,"Clock tower in Peshawar, Pakistan.",,,2026-10-15,no
+pew_gorakhnath_temple,peshawar,Gorakhnath Temple,church,spiritual|history|art,0,0,40,34.008210,71.580690,0,morning,09:00,17:00,2,,Goraknath Temple,"Hindu temple in Peshawar, Pakistan.",,,2026-10-15,no
+pew_peshawar_zoo,peshawar,Peshawar Zoo,zoo,family|nature,50,50,120,34.017306,71.489722,1,morning,08:00,17:00,2,,Peshawar Zoo,"Zoo in Khyber Pakhtunkhwa, Pakistan.",,,2026-10-15,no
+pew_house_of_dilip_kumar,peshawar,House of Dilip Kumar,heritage site,history,50,400,60,34.007290,71.571770,1,morning,08:00,17:00,2,,House of Dilip Kumar,"Building in Peshawar, Pakistan.",,,2026-10-15,no
+pew_shaji_ki_dheri,peshawar,Shaji-ki-Dheri,heritage site,history,50,400,60,33.999440,71.591390,1,morning,08:00,17:00,2,,Shaji-ki-Dheri,Site of an ancient Kanishka stupa in Pakistan.,,,2026-10-15,no
+pew_shahi_bagh,peshawar,Shahi Bagh,park,nature|family,30,30,60,34.019194,71.575583,1,evening,07:00,21:00,2,,Shahi Bagh,"Park in Peshawar, Pakistan.",,,2026-10-15,no
+pew_tatara_park,peshawar,Tatara Park,park,nature|family,30,30,60,33.981200,71.443900,1,evening,07:00,21:00,2,,Tatara Park,"Park in Hayatabad, Pakistan.",,,2026-10-15,no
+pew_wazir_bagh,peshawar,Wazir Bagh,park,nature|family,30,30,60,33.996278,71.574722,1,evening,07:00,21:00,2,,Wazir Bagh,18th century Pakistani garden.,,,2026-10-15,no
+pew_kapoor_haveli,peshawar,Kapoor Haveli,palace,history|art,100,500,75,34.009170,71.571670,0,morning,09:00,17:00,2,,Kapoor Haveli,Indian-Pakistani residential building in Peshawar.,,,2026-10-15,no
+pew_jinnah_park,peshawar,Jinnah Park,park,nature|family,30,30,60,34.015556,71.570556,1,evening,07:00,21:00,2,,"Jinnah Park, Peshawar","Park in Peshawar, Khyber Pakhtunkhwa, Pakistan.",,,2026-10-15,no
+pew_asia_park,peshawar,Asia Park,park,nature|family,30,30,60,34.001111,71.561944,1,evening,07:00,21:00,1,,,Park in Pakistan.,,,2026-10-15,no
+pew_syed_ka_bagh,peshawar,Syed ka Bagh,shrine,spiritual|history,0,0,45,34.002453,71.557442,1,evening,06:00,22:00,1,,,Mausoleum in Pakistan.,,,2026-10-15,no
+pew_chacha_younas_park,peshawar,Chacha Younas Park,park,nature|family,30,30,60,34.015182,71.578070,1,evening,07:00,21:00,1,,,,,,2026-10-15,no
+pew_bhana_mari_tomb,peshawar,Bhana Mari Tomb,monument,history,0,0,45,34.000224,71.554797,1,any,08:00,20:00,1,,,,,,2026-10-15,no
+pew_company_bagh,peshawar,Company Bagh,park,nature|family,30,30,60,34.004809,71.541325,1,evening,07:00,21:00,1,,,,,,2026-10-15,no
+pew_dabgari_gardens,peshawar,Dabgari Gardens,garden,nature|family,30,30,60,34.001213,71.561656,1,evening,07:00,20:00,1,,,,,,2026-10-15,no
+pew_sethi_havelis,peshawar,Sethi Havelis,palace,history|art,100,500,75,34.008949,71.578363,0,morning,09:00,17:00,1,,,,,,2026-10-15,no
+skd_deosai_national_park,skardu,Deosai National Park,national park,nature|adventure,500,3100,180,35.018930,75.414393,1,morning,07:00,17:00,3,jeep,Deosai National Park,National park in Pakistan.,https://offtheatlas.com/visiting-deosai-national-park/,,2026-10-15,no
+skd_lower_kachura_lake,skardu,Lower Kachura Lake,lake,nature|adventure,0,0,150,35.426667,75.455000,1,morning,07:00,18:00,3,,Lower Kachura Lake,"Lake in Gilgit-Baltistan, Pakistan.",,,2026-10-15,no
+skd_upper_kachura_lake,skardu,Upper Kachura Lake,lake,nature|adventure,0,0,150,35.446389,75.445833,1,morning,07:00,18:00,3,,Kachura Lake,"Lake in Gilgit-Baltistan, Pakistan.",,,2026-10-15,no
+skd_satpara_lake,skardu,Satpara Lake,lake,nature|adventure,0,0,90,35.229522,75.630397,1,morning,07:00,18:00,3,,Satpara Lake,"Lake and reservoir in Gilgit-Baltistan, Pakistan.",,,2026-10-15,no
+skd_skardu_fort,skardu,Skardu Fort,fort,history|art,100,500,90,35.303900,75.638900,1,morning,09:00,17:00,2,,Skardu Fort,"Historic site in Gilgit-Baltistan, Pakistan.",,,2026-10-15,no
+skd_amburiq_mosque,skardu,Amburiq Mosque,mosque,spiritual|history|art,0,0,45,35.413500,75.738200,1,any,06:00,21:00,2,,Amburiq Mosque,"Mosque in Gilgit-Baltistan, Pakistan.",,,2026-10-15,no
+skd_shigar_valley,skardu,Shigar Valley,valley,nature|adventure,0,0,150,35.425556,75.733056,1,morning,07:00,18:00,2,,Shigar Valley,"Valley in Gilgit-Baltistan, Pakistan.",,,2026-10-15,no
+skd_shigar_fort,skardu,Shigar Fort,fort,history|art,500,1500,90,35.422760,75.742520,1,morning,09:00,18:00,2,,Shigar Palace,"Fort in Gilgit-Baltistan, Pakistan.",https://www.tourtravelworld.com/pakistan/skardu/shigar-fort.htm,https://www.tourtravelworld.com/pakistan/skardu/shigar-fort.htm,2026-10-15,no
+skd_zharba_lake,skardu,Zharba Lake,lake,nature|adventure,0,0,90,35.362500,75.700000,1,morning,07:00,18:00,2,,Zharba Lake,"Lake in Gilgit-Baltistan, Pakistan.",,,2026-10-15,no
+skd_shangrila_resort_skardu,skardu,Shangrila Resort Skardu,adventure,adventure|family,500,500,120,35.427778,75.455556,1,morning,09:00,17:00,1,,,"Resort in Skardu District, Gilgit-Baltistan, Pakistan.",,,2026-10-15,no
+skd_katpana_lake,skardu,Katpana Lake,lake,nature|adventure,0,0,90,35.316667,75.576111,1,morning,07:00,18:00,1,,,"Lake in Gilgit-Baltistan, Pakistan.",,,2026-10-15,no
+skd_khilingrong_mosque,skardu,Khilingrong Mosque,mosque,spiritual|history|art,0,0,45,35.422222,75.743472,1,any,06:00,21:00,1,,,"Mosque in Gilgit-Baltistan, Pakistan.",,,2026-10-15,no
+skd_chunda_valley,skardu,Chunda Valley,valley,nature|adventure,0,0,120,35.337281,75.495380,1,morning,07:00,18:00,1,,,"Valley in Gilgit-Baltistan, Pakistan.",,,2026-10-15,no
+skd_k2_italian_expeditions_museu,skardu,K2 Italian expeditions museum,museum,history|art,50,500,90,35.295894,75.648283,0,midday,09:00,16:30,1,,,,,,2026-10-15,no
+skd_skardu_viewpoint,skardu,Skardu Viewpoint,viewpoint,nature,0,0,45,35.348347,75.485812,1,evening,06:00,19:00,1,,,,,,2026-10-15,no
+skd_sarfaranga_cold_desert,skardu,Sarfaranga Cold Desert,valley,nature|adventure,0,0,150,35.312872,75.752838,1,morning,07:00,18:00,1,,,,,,2026-10-15,no
+skd_tulkhumbu_lake,skardu,Tulkhumbu Lake,lake,nature|adventure,0,0,150,35.095662,75.579238,1,morning,07:00,18:00,1,,,,,,2026-10-15,no
+skd_manthal_buddha_rock,skardu,Manthal Buddha Rock,heritage site,history,50,400,60,35.268806,75.633647,1,morning,08:00,17:00,1,,,,,,2026-10-15,no
+skd_syed_mehmood_tomb,skardu,Syed Mehmood Tomb,shrine,spiritual|history,0,0,45,35.297880,75.640498,1,evening,06:00,22:00,1,,,,,,2026-10-15,no
+skd_mendoq_khar,skardu,Mendoq Khar,heritage site,history,50,400,60,35.303239,75.640258,1,morning,08:00,17:00,1,,,,,,2026-10-15,no
+swt_butkara_stupa,swat,Butkara Stupa,heritage site,history,50,400,60,34.757100,72.362200,1,morning,08:00,17:00,3,,Butkara Stupa,"Buddhist structure in Khyber Pakhtunkhwa, Pakistan.",,,2026-10-15,no
+swt_malam_jabba,swat,Malam Jabba,adventure,adventure|family,2500,2500,120,34.799722,72.571667,1,morning,09:00,17:00,2,,Malam Jabba,Ski resort.,https://tnnenglish.com/controversy-over-chairlift-fees-at-malam-jabba,,2026-10-15,no
+swt_swat_museum,swat,Swat Museum,museum,history|art,50,500,90,34.763486,72.359381,0,midday,09:00,16:30,2,,Swat Museum,"Museum in Mingora, Pakistan.",,,2026-10-15,no
+swt_mahmud_ghaznavi_mosque,swat,Mahmud Ghaznavi Mosque,mosque,spiritual|history|art,0,0,45,34.743210,72.314270,1,any,06:00,21:00,2,,Mahmud Ghaznavi Mosque,Mosque in Pakistan.,,,2026-10-15,no
+swt_saidu_stupa_swat,swat,"Saidu stupa, Swat",heritage site,history,50,400,60,34.757056,72.362222,1,morning,08:00,17:00,2,,Saidu Sharif Stupa,"Sacred Buddhist area near Saidu Sharif, Pakistan.",,,2026-10-15,no
+swt_shingardara_stupa,swat,Shingardara stupa,heritage site,history,50,400,60,34.691389,72.247222,1,morning,08:00,17:00,1,,,"Archaeological site in Khyber Phaktunkhwa, Pakistan.",,,2026-10-15,no
+swt_amlukdara_stupa,swat,Amlukdara Stupa,heritage site,history,50,400,60,34.683333,72.266667,1,morning,08:00,17:00,1,,,"Archaeological site in Khyber Phaktunkhwa, Pakistan.",,,2026-10-15,no
+swt_fort_of_raja_gera,swat,Fort of Raja-Gera,fort,history|art,100,500,90,34.742030,72.313140,1,morning,09:00,17:00,1,,,"Castle overlooking Odigram, a village in the Swat Valley, Khyber Pakhtunkhwa province of northern Pakistan.",,,2026-10-15,no
+swt_fizagat_recreation_park,swat,Fizagat Recreation Park,park,nature|family,30,30,60,34.792500,72.378056,1,evening,07:00,21:00,2,,Fizagat Recreation Park,Recreational park in the vicinity of Mingora in Pakistan.,,,2026-10-15,no
+swt_rock_carvings_of_gogdara_i,swat,Rock-Carvings of Gogdara I,heritage site,history,50,400,60,34.743073,72.295082,1,morning,08:00,17:00,1,,,Rock carvings in Pakistan.,,,2026-10-15,no
+swt_fort_of_odigram,swat,Fort of Odigram,fort,history|art,100,500,90,34.741791,72.313171,1,morning,09:00,17:00,1,,,Fortifications.,,,2026-10-15,no
+swt_white_palace,swat,White Palace,palace,history|art,100,500,75,34.663276,72.344862,0,morning,09:00,17:00,1,,,,,,2026-10-15,no
+swt_jahanabad_buddha,swat,Jahanabad Buddha,heritage site,history,50,400,60,34.811511,72.467351,1,morning,08:00,17:00,1,,,,,,2026-10-15,no

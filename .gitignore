@@ -1,1 +1,33 @@
+# Secrets
+.env
+*.env
+!.env.example
 
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Flutter / Dart
+frontend/.dart_tool/
+frontend/build/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/coverage/
+frontend/android/.gradle/
+frontend/android/local.properties
+frontend/android/app/release/
+*.iml
+*.apk
+
+# Editors and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
