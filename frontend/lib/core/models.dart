@@ -404,3 +404,24 @@ class Itinerary {
 
   String get weatherSource => _str(plan['weather_source']);
 }
+
+class ReplanResult {
+  final String itineraryId;
+  final int version;
+  final Map<String, dynamic> plan;
+  final Map<String, dynamic> diff;
+
+  ReplanResult({
+    required this.itineraryId,
+    required this.version,
+    required this.plan,
+    required this.diff,
+  });
+
+  factory ReplanResult.fromJson(Map<String, dynamic> j) => ReplanResult(
+        itineraryId: _str(j['itinerary_id']),
+        version: _int(j['version']),
+        plan: (j['plan'] as Map?)?.cast<String, dynamic>() ?? {},
+        diff: (j['diff'] as Map?)?.cast<String, dynamic>() ?? {},
+      );
+}

@@ -174,6 +174,9 @@ def handle_turn(
             found["change"] = "days"
         changed += merge(prefs, found)
 
+    if found.get("budget_error"):
+        return Turn(prefs, found["budget_error"], [], "budget", False, "", found)
+
     # "change budget" -> ask about that field directly
     if found.get("change") and found["change"] not in changed:
         q = ask(found["change"], prefs, cat)

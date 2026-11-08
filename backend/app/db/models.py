@@ -20,6 +20,7 @@ from sqlalchemy import (
     String,
     Table,
     Text,
+    UniqueConstraint,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -178,4 +179,28 @@ class AgentRun(Base):
     agent: Mapped[str] = mapped_column(String(60))
     message: Mapped[str] = mapped_column(Text)
     duration_ms: Mapped[int] = mapped_column(Integer)
+    created_at: Mapped[dt.datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
+class ItineraryVersion(Base):
+    __tablename__ = "itinerary_versions"
+    __table_args__ = (UniqueConstraint("itinerary_id", "version", name="uq_itinerary_version"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    itinerary_id: Mapped[str] = mapped_column(ForeignKey("itineraries.id", ondelete="CASCADE"), index=True)
+    version: Mapped[int] = mapped_column(Integer)
+    plan: Mapped[dict] = mapped_column(JSON)
+    reason: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[dt.datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
+class ReplanRequest(Base):
+    __tablename__ = "replan_requests"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    itinerary_id: Mapped[str] = mapped_column(ForeignKey("itineraries.id", ondelete="CASCADE"), index=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    request_text: Mapped[str] = mapped_column(Text)
+    parsed_change: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    status: Mapped[str] = mapped_column(String(20), default="pending")
     created_at: Mapped[dt.datetime] = mapped_column(DateTime(timezone=True), default=_now)

@@ -308,6 +308,9 @@ def parse_budget(t: Text, awaiting: str, weak: bool = True) -> dict:
                 per_person = bool(re.search(r"\b(per person|each|per head|pp|a head)\b", tail))
                 t.take(m)
                 return {"budget": int(value), "budget_per_person": per_person}
+            if re.search(r"\b(?:rs|pkr|rupees?)\b", s) or "budget" in s:
+                t.take(m)
+                return {"budget_error": "That budget is too low for a realistic trip. Please enter at least Rs 100."}
     if not weak:
         return {}
     if awaiting == "budget":

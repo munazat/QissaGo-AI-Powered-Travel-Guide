@@ -13,7 +13,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.api import auth, chat, itineraries, meta
+from app.api import auth, chat, itineraries, meta, replanning
 from app.core.config import BACKEND_DIR, get_settings
 from app.db.session import create_tables
 
@@ -39,6 +39,7 @@ app.include_router(auth.router, prefix=API)
 app.include_router(meta.router, prefix=API)
 app.include_router(chat.router, prefix=API)
 app.include_router(itineraries.router, prefix=API)
+app.include_router(replanning.router, prefix=API)
 app.mount("/static", StaticFiles(directory=BACKEND_DIR / "static"), name="static")
 
 

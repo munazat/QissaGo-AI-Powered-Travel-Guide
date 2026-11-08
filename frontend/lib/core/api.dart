@@ -113,4 +113,31 @@ class ApiClient {
   Future<void> save(String id) => post('/itineraries/$id/save');
 
   Future<void> unsave(String id) => delete('/itineraries/$id/save');
+
+  Future<ReplanResult> replan(String id, String requestText) async =>
+      ReplanResult.fromJson(await post('/itineraries/$id/replan', {'request_text': requestText}));
+
+  Future<ReplanResult> previewReplan(String id, String requestText) async => ReplanResult.fromJson(
+        await post('/itineraries/$id/replan/preview', {'request_text': requestText}),
+      );
+
+  Future<Map<String, dynamic>> updateProgress(String id, Map<String, dynamic> progress) async =>
+      (await _send(() => _http.put(_uri('/itineraries/$id/progress'), headers: _headers, body: jsonEncode(progress)))
+          as Map)
+          .cast<String, dynamic>();
+
+  Future<Map<String, dynamic>> progress(String id) async =>
+      (await get('/itineraries/$id/progress') as Map).cast<String, dynamic>();
+
+  Future<List<Map<String, dynamic>>> weatherSuggestions(String id) async =>
+      ((await get('/itineraries/$id/weather-suggestions') as Map)['suggestions'] as List)
+          .map((e) => (e as Map).cast<String, dynamic>())
+          .toList();
+
+  Future<List<Map<String, dynamic>>> versions(String id) async =>
+      (await get('/itineraries/$id/versions') as List).map((e) => (e as Map).cast<String, dynamic>()).toList();
+
+  Future<ReplanResult> restoreVersion(String id, int version) async => ReplanResult.fromJson(
+        await post('/itineraries/$id/versions/restore', {'version': version}),
+      );
 }

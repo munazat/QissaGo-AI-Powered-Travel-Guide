@@ -16,6 +16,7 @@ import '../widgets/media.dart';
 import '../widgets/nav.dart';
 import '../widgets/trip_card.dart';
 import 'plans_screen.dart';
+import 'replan_screen.dart';
 
 /// One itinerary, day by day. Opened from the options list or from saved trips.
 class PlanDetailScreen extends StatefulWidget {
@@ -38,12 +39,18 @@ class _PlanDetailScreenState extends State<PlanDetailScreen> {
   int _day = 0;
   bool _saving = false;
   bool _exporting = false;
+  final Set<String> _completedStops = {};
+  final Set<String> _skippedStops = {};
 
   @override
   void initState() {
     super.initState();
     _trip = widget.itinerary;
-    if (_trip == null || !_trip!.hasPlan) _load();
+    if (_trip == null || !_trip!.hasPlan) {
+      _load();
+    } else {
+      _loadProgress();
+    }
   }
 
   String get _id => widget.itineraryId ?? widget.itinerary!.id;
@@ -52,10 +59,65 @@ class _PlanDetailScreenState extends State<PlanDetailScreen> {
     setState(() => _error = null);
     try {
       final t = await context.read<AppState>().api.itinerary(_id);
-      if (mounted) setState(() => _trip = t);
+      if (mounted) {
+        setState(() => _trip = t);
+      }
+      await _loadProgress();
     } catch (e) {
       if (mounted) setState(() => _error = e.toString());
     }
+  }
+
+  Future<void> _loadProgress() async {
+    try {
+      final progress = await context.read<AppState>().api.progress(_id);
+      if (!mounted) return;
+      setState(() {
+        _completedStops
+          ..clear()
+          ..addAll((progress['completed_stop_ids'] as List? ?? []).cast<String>());
+        _skippedStops
+          ..clear()
+          ..addAll((progress['skipped_stop_ids'] as List? ?? []).cast<String>());
+      });
+    } catch (_) {}
+  }
+
+  Future<void> _setStopStatus(PlanItem item, bool completed) async {
+    final nextCompleted = {..._completedStops};
+    final nextSkipped = {..._skippedStops};
+    if (completed) {
+      nextCompleted.add(item.id);
+      nextSkipped.remove(item.id);
+    } else {
+      nextSkipped.add(item.id);
+      nextCompleted.remove(item.id);
+    }
+    try {
+      await context.read<AppState>().api.updateProgress(_id, {
+        'day': _day + 1,
+        'completed_stop_ids': nextCompleted.toList(),
+        'skipped_stop_ids': nextSkipped.toList(),
+        'current_time': _nowHm(),
+      });
+      if (mounted) {
+        setState(() {
+          _completedStops
+            ..clear()
+            ..addAll(nextCompleted);
+          _skippedStops
+            ..clear()
+            ..addAll(nextSkipped);
+        });
+      }
+    } catch (e) {
+      if (mounted) showError(context, e);
+    }
+  }
+
+  String _nowHm() {
+    final now = DateTime.now();
+    return '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
   }
 
   Future<void> _toggleSave() async {
@@ -125,7 +187,14 @@ class _PlanDetailScreenState extends State<PlanDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _DayHeader(day: day, showWeather: show['weather'] ?? true),
-              _Timeline(key: ValueKey('${trip.id}-$_day'), day: day, show: show),
+              _Timeline(
+                key: ValueKey('${trip.id}-$_day'),
+                day: day,
+                show: show,
+                completedStops: _completedStops,
+                skippedStops: _skippedStops,
+                onStatusChanged: _setStopStatus,
+              ),
             ],
           );
     final mapCard = day != null && (show['map'] ?? true) && day.stops.isNotEmpty
@@ -225,6 +294,16 @@ class _PlanDetailScreenState extends State<PlanDetailScreen> {
                   runSpacing: 10,
                   alignment: WrapAlignment.center,
                   children: [
+                    OutlinedButton.icon(
+                      onPressed: () async {
+                        final changed = await Navigator.of(context).push<bool>(
+                          MaterialPageRoute(builder: (_) => ReplanScreen(itinerary: trip)),
+                        );
+                        if (changed == true && mounted) _load();
+                      },
+                      icon: const Icon(Icons.edit_calendar_outlined),
+                      label: const Text('Update plan'),
+                    ),
                     OutlinedButton.icon(
                       onPressed: () => Navigator.of(context)
                           .push(MaterialPageRoute(builder: (_) => PlansScreen(batchId: trip.batchId))),
@@ -637,10 +716,20 @@ class _StopNumber extends StatelessWidget {
 
 /// The day as a vertical line with numbered stops, meals and breaks, and the travel between them.
 class _Timeline extends StatelessWidget {
-  const _Timeline({super.key, required this.day, required this.show});
+  const _Timeline({
+    super.key,
+    required this.day,
+    required this.show,
+    required this.completedStops,
+    required this.skippedStops,
+    required this.onStatusChanged,
+  });
 
   final PlanDay day;
   final Map<String, bool> show;
+  final Set<String> completedStops;
+  final Set<String> skippedStops;
+  final Future<void> Function(PlanItem, bool) onStatusChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -676,7 +765,16 @@ class _Timeline extends StatelessWidget {
           bottom: last,
           marker: _StopNumber(stop),
           markerTop: 20,
-          child: Appear(index: stop, child: _StopCard(item: item, show: show)),
+          child: Appear(
+            index: stop,
+            child: _StopCard(
+              item: item,
+              show: show,
+              completed: completedStops.contains(item.id),
+              skipped: skippedStops.contains(item.id),
+              onStatusChanged: onStatusChanged,
+            ),
+          ),
         ));
       } else {
         rows.add(_Rail(
@@ -749,10 +847,19 @@ class _Rail extends StatelessWidget {
 }
 
 class _StopCard extends StatelessWidget {
-  const _StopCard({required this.item, required this.show});
+  const _StopCard({
+    required this.item,
+    required this.show,
+    required this.completed,
+    required this.skipped,
+    required this.onStatusChanged,
+  });
 
   final PlanItem item;
   final Map<String, bool> show;
+  final bool completed;
+  final bool skipped;
+  final Future<void> Function(PlanItem, bool) onStatusChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -806,6 +913,28 @@ class _StopCard extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
+                ),
+                PopupMenuButton<String>(
+                  tooltip: 'Update progress',
+                  onSelected: (value) => onStatusChanged(item, value == 'completed'),
+                  itemBuilder: (_) => [
+                    PopupMenuItem(
+                      value: 'completed',
+                      child: Text(completed ? 'Mark not completed' : 'Mark completed'),
+                    ),
+                    PopupMenuItem(
+                      value: 'skipped',
+                      child: Text(skipped ? 'Mark not skipped' : 'Mark skipped'),
+                    ),
+                  ],
+                  icon: Icon(
+                    completed
+                        ? Icons.check_circle
+                        : skipped
+                            ? Icons.skip_next
+                            : Icons.more_vert,
+                    color: completed ? Palette.primaryDeep : Palette.muted,
                   ),
                 ),
               ],
