@@ -8,8 +8,8 @@ from sqlalchemy.orm import Session
 from app.agents.budget import trip_totals
 from app.db.models import Itinerary, ItineraryVersion, ReplanRequest, User
 from app.db.session import get_db
-from app.replanning.parser import parse_change
-from app.replanning.service import apply_change
+from app.replanning.parser import parse_changes
+from app.replanning.service import apply_changes
 from app.schemas.replanning import (
     ProgressBody,
     ReplanBody,
@@ -47,8 +47,8 @@ def _execution(itinerary: Itinerary) -> dict:
 
 
 def _preview(itinerary: Itinerary, body: ReplanBody, cat: Catalog) -> tuple[dict, object, object]:
-    change = body.change or parse_change(body.request_text)
-    next_plan, diff = apply_change(itinerary.plan, _prefs(itinerary), change, cat, _execution(itinerary))
+    changes = [body.change] if body.change else parse_changes(body.request_text)
+    next_plan, diff = apply_changes(itinerary.plan, _prefs(itinerary), changes, cat, _execution(itinerary))
     p = _prefs(itinerary)
     p["city"] = cat.cities[itinerary.city_id]
     p["budget"] = p.get("budget") or next_plan.get("totals", {}).get("budget", 0)
@@ -56,7 +56,7 @@ def _preview(itinerary: Itinerary, body: ReplanBody, cat: Catalog) -> tuple[dict
     if not totals["within"]:
         raise ValueError("That change would exceed the trip budget.")
     next_plan["totals"] = totals
-    return next_plan, diff, change
+    return next_plan, diff, changes
 
 
 @router.post("/{itinerary_id}/replan", response_model=ReplanResponse)
@@ -69,7 +69,7 @@ def replan(
 ) -> ReplanResponse:
     itinerary = _owned(db, itinerary_id, user)
     try:
-        next_plan, diff, change = _preview(itinerary, body, cat)
+        next_plan, diff, changes = _preview(itinerary, body, cat)
     except ValueError as exc:
         raise HTTPException(400, str(exc)) from exc
 
@@ -84,7 +84,7 @@ def replan(
         itinerary_id=itinerary.id,
         user_id=user.id,
         request_text=body.request_text,
-        parsed_change=change.model_dump(mode="json"),
+        parsed_change={"changes": [change.model_dump(mode="json") for change in changes]},
         status="applied",
     )
     db.add(request)

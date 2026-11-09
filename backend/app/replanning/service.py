@@ -16,17 +16,28 @@ def apply_change(
 ) -> tuple[dict, ReplanDiff]:
     updated = copy.deepcopy(plan)
     days = updated.get("days", [])
-    execution = execution or {}
+    execution = copy.deepcopy(execution or {})
+    execution.update(copy.deepcopy(plan.get("execution", {})))
     completed = set(execution.get("completed_stop_ids", [])) | set(execution.get("skipped_stop_ids", []))
     affected: set[int] = set()
     added: list[str] = []
     removed: list[str] = []
+    visited: list[str] = []
     moved: list[str] = []
 
     if change.kind == ChangeKind.START_LATER:
         day_index = _index(change.day or 1, days)
         _shift_day(days[day_index], change.minutes)
         affected.add(change.day or 1)
+    elif change.kind == ChangeKind.MARK_VISITED:
+        source_index, item = _find_stop(days, change.place_id or "", change.day)
+        if item is None:
+            raise ValueError(f"Stop '{change.place_id}' was not found in this itinerary.")
+        completed_ids = set(execution.get("completed_stop_ids", []))
+        completed_ids.add(item["id"])
+        execution["completed_stop_ids"] = sorted(completed_ids)
+        affected.add(source_index + 1)
+        visited.append(item["name"])
     elif change.kind in (ChangeKind.REMOVE, ChangeKind.MOVE, ChangeKind.CHANGE_DAY):
         source_index, item = _find_stop(days, change.place_id or "", change.day)
         if item is None:
@@ -44,7 +55,7 @@ def apply_change(
             moved.append(item["name"])
     elif change.kind == ChangeKind.ADD:
         target_index = _index(change.day or 1, days)
-        poi = next((p for p in catalog.pois(prefs["city_id"]) if p["id"] == change.place_id), None)
+        poi = _find_poi(catalog.pois(prefs["city_id"]), change.place_id or "", days)
         if poi is None:
             raise ValueError(f"Place '{change.place_id}' is not available in this city.")
         if any(item.get("id") == poi["id"] for day in days for item in day.get("items", [])):
@@ -63,11 +74,29 @@ def apply_change(
         affected_days=sorted(affected),
         added=added,
         removed=removed,
+        visited=visited,
         moved=moved,
         reason=change.kind.value,
     )
     updated["days"] = days
+    if change.kind == ChangeKind.MARK_VISITED:
+        updated["execution"] = execution
     return updated, diff
+
+
+def apply_changes(
+    plan: dict, prefs: dict, changes: list[ChangeRequest], catalog: Catalog, execution: dict | None = None
+) -> tuple[dict, ReplanDiff]:
+    current = copy.deepcopy(plan)
+    combined = ReplanDiff(affected_days=[], added=[], removed=[], visited=[], moved=[], reason="multiple")
+    for change in changes:
+        current, diff = apply_change(current, prefs, change, catalog, execution)
+        combined.affected_days = sorted(set(combined.affected_days) | set(diff.affected_days))
+        combined.added.extend(diff.added)
+        combined.removed.extend(diff.removed)
+        combined.visited.extend(diff.visited)
+        combined.moved.extend(diff.moved)
+    return current, combined
 
 
 def _index(day: int, days: list[dict]) -> int:
@@ -78,11 +107,51 @@ def _index(day: int, days: list[dict]) -> int:
 
 def _find_stop(days: list[dict], place_id: str, requested_day: int | None) -> tuple[int, dict | None]:
     indexes = range(len(days)) if requested_day is None else [_index(requested_day, days)]
+    query = _clean_place(place_id)
+    ordinal = {"first": 0, "second": 1, "third": 2}.get(query)
+    candidates: list[tuple[int, dict]] = []
     for index in indexes:
         for item in days[index].get("items", []):
-            if item.get("kind") == "stop" and (item.get("id") == place_id or item.get("name", "").lower() == place_id):
+            if item.get("kind") != "stop":
+                continue
+            candidates.append((index, item))
+            name = _clean_place(item.get("name", ""))
+            if item.get("id") == place_id or name == query or query in name or name in query:
                 return index, item
+    if ordinal is not None and ordinal < len(candidates):
+        return candidates[ordinal]
     return -1, None
+
+
+def _clean_place(value: str) -> str:
+    return " ".join(value.lower().replace("-", " ").split()).removeprefix("the ")
+
+
+def _find_poi(pois: list[dict], query: str, days: list[dict]) -> dict | None:
+    cleaned = _clean_place(query)
+    existing = {item.get("id") for day in days for item in day.get("items", []) if item.get("kind") == "stop"}
+    for poi in pois:
+        name = _clean_place(poi.get("name", ""))
+        if poi.get("id") == query or name == cleaned or cleaned in name or name in cleaned:
+            return poi
+    topics = {
+        "cultural": {"history", "art", "spiritual"},
+        "culture": {"history", "art", "spiritual"},
+        "historical": {"history"},
+        "history": {"history"},
+        "museum": {"history", "art"},
+        "indoor": {"history", "art", "spiritual"},
+        "nature": {"nature"},
+        "food": {"food"},
+        "shopping": {"shopping"},
+    }
+    wanted = topics.get(cleaned, set())
+    if wanted:
+        return next(
+            (poi for poi in pois if poi.get("id") not in existing and wanted.intersection(poi.get("tags", []))),
+            None,
+        )
+    return None
 
 
 def _shift_day(day: dict, minutes: int) -> None:

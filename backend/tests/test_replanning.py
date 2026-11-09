@@ -5,8 +5,8 @@ import pytest
 from app.db.models import Itinerary
 from app.db.session import SessionLocal
 from app.replanning.contracts import ChangeKind, ChangeRequest
-from app.replanning.parser import parse_change
-from app.replanning.service import apply_change
+from app.replanning.parser import parse_change, parse_changes
+from app.replanning.service import apply_change, apply_changes
 from app.services.catalog import Catalog, load_catalog
 
 
@@ -184,6 +184,48 @@ def test_add_rejects_duplicate_and_unknown_places():
 def test_parser_rejects_unsupported_request():
     with pytest.raises(ValueError, match="could not identify"):
         parse_change("make the trip more relaxing")
+
+
+def test_parser_accepts_natural_aliases_and_multiple_changes():
+    changes = parse_changes("remove the fort on day 1 and start later by 30 mins on day 1")
+
+    assert [change.kind for change in changes] == [ChangeKind.REMOVE, ChangeKind.START_LATER]
+    assert changes[0].place_id == "fort"
+    assert changes[1].minutes == 30
+
+
+def test_parser_marks_multiple_visited_stops():
+    changes = parse_changes("I've already visited the first two places")
+
+    assert [change.kind for change in changes] == [ChangeKind.MARK_VISITED, ChangeKind.MARK_VISITED]
+    assert [change.place_id for change in changes] == ["first", "second"]
+
+
+def test_mark_visited_keeps_stop_and_locks_it():
+    updated, diff = apply_changes(
+        _plan(),
+        {"city": "lahore", "city_id": "lahore", "size": 2, "day_start": "09:00"},
+        parse_changes("I've already visited the first place"),
+        _catalog(),
+    )
+
+    assert diff.visited == ["Fort"]
+    assert updated["execution"]["completed_stop_ids"] == ["lhr_fort"]
+    assert updated["days"][0]["items"][0]["id"] == "lhr_fort"
+
+
+def test_multiple_changes_can_use_a_catalog_topic():
+    updated, diff = apply_changes(
+        _plan(),
+        {"city": "lahore", "city_id": "lahore", "size": 2, "day_start": "09:00"},
+        parse_changes("remove the fort on day 1; add a cultural place on day 2"),
+        _catalog(),
+    )
+
+    assert diff.removed == ["Fort"]
+    assert diff.added == ["Museum"]
+    assert updated["days"][0]["items"] == []
+    assert updated["days"][1]["items"][0]["id"] == "lhr_bazaar"
 
 
 def test_preview_does_not_persist_and_apply_creates_version(client, auth):
