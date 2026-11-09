@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+import pytest
+
+from app.db.models import Itinerary
+from app.db.session import SessionLocal
 from app.replanning.contracts import ChangeKind, ChangeRequest
 from app.replanning.parser import parse_change
 from app.replanning.service import apply_change
-from app.services.catalog import Catalog
+from app.services.catalog import Catalog, load_catalog
 
 
 def _generated_itinerary(client, auth) -> dict:
@@ -127,6 +131,61 @@ def test_add_rebuilds_requested_day():
     assert updated["days"][0]["items"][1]["id"] == "lhr_museum"
 
 
+def test_move_rebuilds_source_and_target_days():
+    updated, diff = apply_change(
+        _plan(),
+        {"city": "lahore", "city_id": "lahore", "size": 2, "day_start": "09:00"},
+        ChangeRequest(kind=ChangeKind.MOVE, place_id="lhr_fort", day=1, target_day=2),
+        _catalog(),
+    )
+
+    assert diff.affected_days == [1, 2]
+    assert diff.moved == ["Fort"]
+    assert updated["days"][0]["items"] == []
+    assert [item["id"] for item in updated["days"][1]["items"]] == ["lhr_bazaar", "lhr_fort"]
+
+
+def test_start_later_rejects_schedule_past_day_limit():
+    plan = _plan()
+    plan["days"][0]["items"][0].update({"start": "20:30", "end": "21:30"})
+
+    with pytest.raises(ValueError, match="allowed end time"):
+        apply_change(
+            plan,
+            {"city": "lahore", "city_id": "lahore", "size": 2, "day_start": "09:00"},
+            ChangeRequest(kind=ChangeKind.START_LATER, day=1, minutes=60),
+            _catalog(),
+        )
+
+
+def test_add_rejects_duplicate_and_unknown_places():
+    plan = _plan()
+    prefs = {"city": "lahore", "city_id": "lahore", "size": 2, "day_start": "09:00"}
+    catalog = _catalog()
+    catalog.pois_by_city["lahore"].append(_stop("lhr_fort", "Fort"))
+
+    with pytest.raises(ValueError, match="already in the itinerary"):
+        apply_change(
+            plan,
+            prefs,
+            ChangeRequest(kind=ChangeKind.ADD, place_id="lhr_fort", day=1),
+            catalog,
+        )
+
+    with pytest.raises(ValueError, match="not available"):
+        apply_change(
+            plan,
+            prefs,
+            ChangeRequest(kind=ChangeKind.ADD, place_id="unknown", day=1),
+            catalog,
+        )
+
+
+def test_parser_rejects_unsupported_request():
+    with pytest.raises(ValueError, match="could not identify"):
+        parse_change("make the trip more relaxing")
+
+
 def test_preview_does_not_persist_and_apply_creates_version(client, auth):
     itinerary = _generated_itinerary(client, auth)
     stop = _first_stop(itinerary["plan"])
@@ -153,6 +212,53 @@ def test_preview_does_not_persist_and_apply_creates_version(client, auth):
     versions = client.get(f"/api/v1/itineraries/{itinerary['id']}/versions", headers=auth)
     assert versions.status_code == 200
     assert [version["version"] for version in versions.json()] == [1]
+
+
+def test_restore_creates_new_version_with_previous_plan(client, auth):
+    itinerary = _generated_itinerary(client, auth)
+    stop = _first_stop(itinerary["plan"])
+    replan = client.post(
+        f"/api/v1/itineraries/{itinerary['id']}/replan",
+        headers=auth,
+        json={"request_text": f"remove stop {stop['id']} on day 1"},
+    )
+    assert replan.status_code == 200, replan.text
+    assert replan.json()["version"] == 1
+
+    restored = client.post(
+        f"/api/v1/itineraries/{itinerary['id']}/versions/restore",
+        headers=auth,
+        json={"version": 1},
+    )
+    assert restored.status_code == 200, restored.text
+    assert restored.json()["version"] == 2
+    assert _first_stop(restored.json()["plan"])["id"] == stop["id"]
+
+    versions = client.get(f"/api/v1/itineraries/{itinerary['id']}/versions", headers=auth)
+    assert [version["version"] for version in versions.json()] == [2, 1]
+
+
+def test_replan_rejects_budget_overflow(client, auth):
+    itinerary = _generated_itinerary(client, auth)
+    with SessionLocal() as db:
+        stored = db.get(Itinerary, itinerary["id"])
+        preferences = dict(stored.preferences)
+        preferences["budget"] = 1
+        stored.preferences = preferences
+        db.commit()
+        available = load_catalog(db).pois("lahore")
+    planned_ids = {
+        item["id"] for day in itinerary["plan"]["days"] for item in day["items"] if item.get("kind") == "stop"
+    }
+    new_place = next(place for place in available if place["id"] not in planned_ids)
+    response = client.post(
+        f"/api/v1/itineraries/{itinerary['id']}/replan",
+        headers=auth,
+        json={"request_text": f"add place {new_place['id']} on day 1"},
+    )
+
+    assert response.status_code == 400
+    assert "budget" in response.json()["detail"].lower()
 
 
 def test_progress_rejects_unknown_stops_and_locks_completed_stops(client, auth):
