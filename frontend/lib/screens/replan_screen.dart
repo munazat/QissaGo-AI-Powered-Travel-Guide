@@ -28,6 +28,7 @@ class _ReplanScreenState extends State<ReplanScreen> {
     super.initState();
     _loadSuggestions();
     _loadVersions();
+    _loadHistory();
   }
 
   @override
@@ -47,6 +48,29 @@ class _ReplanScreenState extends State<ReplanScreen> {
     try {
       final values = await context.read<AppState>().api.versions(widget.itinerary.id);
       if (mounted) setState(() => _versions = values);
+    } catch (_) {}
+  }
+
+  Future<void> _loadHistory() async {
+    try {
+      final values = await context.read<AppState>().api.replanHistory(widget.itinerary.id);
+      if (!mounted) return;
+      setState(() {
+        _messages
+          ..clear()
+          ..addAll(
+            values.expand(
+              (entry) => [
+                ChatMessage(fromUser: true, text: entry['request_text']?.toString() ?? ''),
+                ChatMessage(
+                  fromUser: false,
+                  text:
+                      entry['status'] == 'applied' ? 'This update was applied.' : 'This update is ${entry['status']}.',
+                ),
+              ],
+            ),
+          );
+      });
     } catch (_) {}
   }
 

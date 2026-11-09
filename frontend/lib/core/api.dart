@@ -134,6 +134,11 @@ class ApiClient {
           .map((e) => (e as Map).cast<String, dynamic>())
           .toList();
 
+  Future<List<Map<String, dynamic>>> replanHistory(String id) async =>
+      (await get('/itineraries/$id/replan/history') as List)
+          .map((e) => (e as Map).cast<String, dynamic>())
+          .toList();
+
   Future<List<Map<String, dynamic>>> versions(String id) async =>
       (await get('/itineraries/$id/versions') as List).map((e) => (e as Map).cast<String, dynamic>()).toList();
 

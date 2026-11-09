@@ -25,10 +25,31 @@ def apply_change(
     visited: list[str] = []
     moved: list[str] = []
     budget_amount: int | None = None
+    context: dict[str, str | int | float | bool] = {}
+    if change.context:
+        context = change.context
+        execution.setdefault("context", {}).update(context)
 
     if change.kind == ChangeKind.UPDATE_BUDGET:
         budget_amount = change.budget_amount
         execution["remaining_budget"] = budget_amount
+    elif change.kind == ChangeKind.UPDATE_CONTEXT:
+        day_index = _index(change.day, days) if change.day else None
+        target_days = [days[day_index]] if day_index is not None else days
+        for target_day in target_days:
+            if context.get("weather") == "rainy":
+                target_day.setdefault("weather", {}).update({"rainy": True, "rain_pct": 100})
+            elif context.get("weather") == "clear":
+                target_day.setdefault("weather", {}).update({"rainy": False, "rain_pct": 0})
+            affected.add(target_day.get("day", days.index(target_day) + 1))
+        if context.get("current_time"):
+            execution["current_time"] = context["current_time"]
+            if change.day:
+                execution["day"] = change.day
+        if context.get("time_status") == "late":
+            execution["time_status"] = "late"
+        if context.get("fatigue") == "high":
+            execution["fatigue"] = "high"
     elif change.kind == ChangeKind.START_LATER:
         day_index = _index(change.day or 1, days)
         _shift_day(days[day_index], change.minutes)
@@ -59,6 +80,10 @@ def apply_change(
             moved.append(item["name"])
     elif change.kind == ChangeKind.ADD:
         target_index = _index(change.day or 1, days)
+        if context.get("weather") == "rainy":
+            days[target_index].setdefault("weather", {}).update({"rainy": True, "rain_pct": 100})
+        elif context.get("weather") == "clear":
+            days[target_index].setdefault("weather", {}).update({"rainy": False, "rain_pct": 0})
         poi = _find_poi(catalog.pois(prefs["city_id"]), change.place_id or "", days)
         if poi is None:
             raise ValueError(f"Place '{change.place_id}' is not available in this city.")
@@ -81,10 +106,11 @@ def apply_change(
         visited=visited,
         moved=moved,
         budget_amount=budget_amount,
+        context=context,
         reason=change.kind.value,
     )
     updated["days"] = days
-    if change.kind in (ChangeKind.MARK_VISITED, ChangeKind.UPDATE_BUDGET):
+    if change.kind in (ChangeKind.MARK_VISITED, ChangeKind.UPDATE_BUDGET, ChangeKind.UPDATE_CONTEXT) or context:
         updated["execution"] = execution
     return updated, diff
 
@@ -94,10 +120,10 @@ def apply_changes(
 ) -> tuple[dict, ReplanDiff]:
     current = copy.deepcopy(plan)
     combined = ReplanDiff(
-        affected_days=[], added=[], removed=[], visited=[], moved=[], budget_amount=None, reason="multiple"
+        affected_days=[], added=[], removed=[], visited=[], moved=[], budget_amount=None, context={}, reason="multiple"
     )
     for change in changes:
-        current, diff = apply_change(current, prefs, change, catalog, execution)
+        current, diff = apply_change(current, prefs, change, catalog, current.get("execution", execution))
         combined.affected_days = sorted(set(combined.affected_days) | set(diff.affected_days))
         combined.added.extend(diff.added)
         combined.removed.extend(diff.removed)
@@ -105,6 +131,10 @@ def apply_changes(
         combined.moved.extend(diff.moved)
         if diff.budget_amount is not None:
             combined.budget_amount = diff.budget_amount
+        combined.context.update(diff.context)
+        if current.get("execution"):
+            combined_context = current["execution"].get("context", {})
+            combined.context.update(combined_context)
     return current, combined
 
 
@@ -189,6 +219,8 @@ def _reschedule(day: dict, prefs: dict, catalog: Catalog, execution: dict | None
     day_start = prefs.get("day_start", "09:00")
     if execution.get("day") == day.get("day") and execution.get("current_time"):
         day_start = max(day_start, execution["current_time"])
+    if execution.get("fatigue") == "high":
+        day_start = min_to_hm(min(hm_to_min(day_start) + 60, DAY_LIMIT - 60))
     items, dropped = layout_day(
         ordered,
         weather,

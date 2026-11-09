@@ -228,6 +228,41 @@ def test_budget_update_is_persisted_in_execution_state():
     assert updated["execution"]["remaining_budget"] == 20_000
 
 
+def test_parser_extracts_combined_trip_context():
+    change = parse_change("It is raining, I am tired, keep me somewhere nearby and avoid stairs on day 1")
+
+    assert change.kind == ChangeKind.UPDATE_CONTEXT
+    assert change.day == 1
+    assert change.context == {
+        "weather": "rainy",
+        "fatigue": "high",
+        "accessibility": "step_free",
+        "max_distance_km": 3.0,
+    }
+
+
+def test_parser_keeps_context_with_a_place_request():
+    change = parse_change("Find a nearby indoor place on day 2")
+
+    assert change.kind == ChangeKind.ADD
+    assert change.place_id == "indoor"
+    assert change.day == 2
+    assert change.context["max_distance_km"] == 3.0
+
+
+def test_context_update_persists_and_changes_weather():
+    updated, diff = apply_changes(
+        _plan(),
+        {"city": "lahore", "city_id": "lahore", "size": 2, "day_start": "09:00"},
+        parse_changes("It is raining on day 1"),
+        _catalog(),
+    )
+
+    assert diff.context["weather"] == "rainy"
+    assert updated["execution"]["context"]["weather"] == "rainy"
+    assert updated["days"][0]["weather"]["rainy"] is True
+
+
 def test_mark_visited_keeps_stop_and_locks_it():
     updated, diff = apply_changes(
         _plan(),

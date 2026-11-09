@@ -10,6 +10,7 @@ class ChangeKind(StrEnum):
     REMOVE = "remove"
     MARK_VISITED = "mark_visited"
     UPDATE_BUDGET = "update_budget"
+    UPDATE_CONTEXT = "update_context"
     MOVE = "move"
     START_LATER = "start_later"
     CHANGE_DAY = "change_day"
@@ -22,6 +23,7 @@ class ChangeRequest(BaseModel):
     target_day: int | None = Field(default=None, ge=1, le=31)
     minutes: int = Field(default=60, ge=15, le=240)
     budget_amount: int | None = Field(default=None, ge=0)
+    context: dict[str, str | int | float | bool] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def validate_fields(self) -> ChangeRequest:
@@ -43,6 +45,8 @@ class ChangeRequest(BaseModel):
             raise ValueError("target_day is required for this change")
         if self.kind == ChangeKind.UPDATE_BUDGET and self.budget_amount is None:
             raise ValueError("budget_amount is required for this change")
+        if self.kind == ChangeKind.UPDATE_CONTEXT and not self.context:
+            raise ValueError("context is required for this change")
         return self
 
 
@@ -57,12 +61,12 @@ class ReplanIn(BaseModel):
 
 class ReplanDiff(BaseModel):
     affected_days: list[int]
-    added: list[str] = []
-    removed: list[str] = []
-    visited: list[str] = []
+    added: list[str] = Field(default_factory=list)
+    removed: list[str] = Field(default_factory=list)
+    visited: list[str] = Field(default_factory=list)
+    moved: list[str] = Field(default_factory=list)
     budget_amount: int | None = None
-    moved: list[str] = []
-    budget_amount: int | None = None
+    context: dict[str, str | int | float | bool] = Field(default_factory=dict)
     reason: str
 
 

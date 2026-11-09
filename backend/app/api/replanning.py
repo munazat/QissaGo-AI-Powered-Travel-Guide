@@ -53,8 +53,16 @@ def _preview(itinerary: Itinerary, body: ReplanBody, cat: Catalog) -> tuple[dict
     p["city"] = cat.cities[itinerary.city_id]
     p["budget"] = p.get("budget") or next_plan.get("totals", {}).get("budget", 0)
     totals = trip_totals(next_plan["days"], p, next_plan.get("totals", {}).get("hotel", "budget"))
-    if not totals["within"]:
+    remaining_budget = next_plan.get("execution", {}).get("remaining_budget")
+    current_total = itinerary.plan.get("totals", {}).get("total", itinerary.total_cost)
+    if remaining_budget is not None and totals["total"] - current_total > remaining_budget:
+        raise ValueError(
+            f"That change needs Rs {totals['total'] - current_total:,}, but only Rs {remaining_budget:,} remains."
+        )
+    if remaining_budget is None and not totals["within"]:
         raise ValueError("That change would exceed the trip budget.")
+    if remaining_budget is not None:
+        totals["remaining_budget"] = remaining_budget
     next_plan["totals"] = totals
     return next_plan, diff, changes
 
@@ -134,6 +142,26 @@ def replan_preview(
 def progress(itinerary_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)) -> dict:
     itinerary = _owned(db, itinerary_id, user)
     return _execution(itinerary)
+
+
+@router.get("/{itinerary_id}/replan/history")
+def replan_history(itinerary_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)) -> list[dict]:
+    _owned(db, itinerary_id, user)
+    rows = (
+        db.query(ReplanRequest)
+        .filter(ReplanRequest.itinerary_id == itinerary_id, ReplanRequest.user_id == user.id)
+        .order_by(ReplanRequest.created_at.asc())
+        .all()
+    )
+    return [
+        {
+            "request_text": row.request_text,
+            "parsed_change": row.parsed_change or {},
+            "status": row.status,
+            "created_at": row.created_at,
+        }
+        for row in rows
+    ]
 
 
 @router.put("/{itinerary_id}/progress")

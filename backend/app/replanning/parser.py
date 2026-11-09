@@ -31,6 +31,13 @@ def parse_changes(text: str) -> list[ChangeRequest]:
 def _parse_part(value: str) -> list[ChangeRequest]:
     day = _day(value, r"\b(?:day|on)\s*(\d+)\b")
     target = _day(value, r"\b(?:to|into|for)\s*day\s*(\d+)\b")
+    context = _context(value)
+    has_action = re.search(
+        r"\b(?:add|include|visit|find|recommend|replace|remove|delete|skip|move|shift|relocate|start|visited)\b",
+        value,
+    )
+    if context and not has_action:
+        return [ChangeRequest(kind=ChangeKind.UPDATE_CONTEXT, day=day, context=context)]
     chunks = [chunk.strip() for chunk in re.split(r"\s*,\s*(?=[a-z])|\s+\band\b\s+", value) if chunk.strip()]
     if len(chunks) > 1:
         return [change for chunk in chunks for change in _parse_part(chunk)]
@@ -62,13 +69,40 @@ def _parse_part(value: str) -> list[ChangeRequest]:
             raise ValueError("Which stop should I remove?")
         return [ChangeRequest(kind=ChangeKind.REMOVE, place_id=place, day=day)]
     if re.search(r"\b(?:add|include|visit|find|recommend|replace)\b", value):
-        place = _place(value)
-        if not place:
-            place = _topic(value)
+        place = _topic(value) or _place(value)
         if not place:
             raise ValueError("What place or type of place should I add?")
-        return [ChangeRequest(kind=ChangeKind.ADD, place_id=place, day=day or 1)]
+        return [ChangeRequest(kind=ChangeKind.ADD, place_id=place, day=day or 1, context=context)]
     raise ValueError("I could not identify a change. Try saying what to add, remove, move, or when to start.")
+
+
+def _context(text: str) -> dict[str, str | int | float | bool]:
+    context: dict[str, str | int | float | bool] = {}
+    if re.search(r"\b(?:rain|raining|rainy|storm|wet)\b", text):
+        context["weather"] = "rainy"
+    elif re.search(r"\b(?:sunny|clear|hot|heat)\b", text):
+        context["weather"] = "clear"
+    if re.search(r"\b(?:tired|exhausted|fatigued|low energy|need a break)\b", text):
+        context["fatigue"] = "high"
+    if re.search(r"\b(?:wheelchair|wheel chair|accessible|accessibility|avoid stairs)\b", text):
+        context["accessibility"] = "step_free"
+    if re.search(r"\b(?:nearby|near me|close by|close to me)\b", text):
+        context["max_distance_km"] = 3.0
+    distance = re.search(r"\b(?:within|under|less than)\s+(\d+(?:\.\d+)?)\s*km\b", text)
+    if distance:
+        context["max_distance_km"] = float(distance.group(1))
+    time_match = re.search(r"\b(?:current time is|it is|it's|at)\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)?\b", text)
+    if time_match:
+        hour = int(time_match.group(1))
+        minute = int(time_match.group(2) or 0)
+        if time_match.group(3) == "pm" and hour < 12:
+            hour += 12
+        if time_match.group(3) == "am" and hour == 12:
+            hour = 0
+        context["current_time"] = f"{hour:02d}:{minute:02d}"
+    elif re.search(r"\b(?:running late|behind schedule|we are late)\b", text):
+        context["time_status"] = "late"
+    return context
 
 
 def _day(text: str, pattern: str) -> int | None:
