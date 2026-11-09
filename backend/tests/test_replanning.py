@@ -228,6 +228,21 @@ def test_budget_update_is_persisted_in_execution_state():
     assert updated["execution"]["remaining_budget"] == 20_000
 
 
+def test_budget_update_is_reflected_in_plan_totals(client, auth):
+    itinerary = _generated_itinerary(client, auth)
+
+    response = client.post(
+        f"/api/v1/itineraries/{itinerary['id']}/replan",
+        headers=auth,
+        json={"request_text": "I have Rs 20,000 left"},
+    )
+
+    assert response.status_code == 200, response.text
+    totals = response.json()["plan"]["totals"]
+    assert totals["budget"] == 20_000
+    assert totals["remaining_budget"] == 20_000
+
+
 def test_parser_extracts_combined_trip_context():
     change = parse_change("It is raining, I am tired, keep me somewhere nearby and avoid stairs on day 1")
 

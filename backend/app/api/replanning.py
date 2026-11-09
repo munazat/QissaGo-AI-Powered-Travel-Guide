@@ -62,7 +62,11 @@ def _preview(itinerary: Itinerary, body: ReplanBody, cat: Catalog) -> tuple[dict
     if remaining_budget is None and not totals["within"]:
         raise ValueError("That change would exceed the trip budget.")
     if remaining_budget is not None:
+        additional_cost = max(0, totals["total"] - current_total)
+        totals["budget"] = remaining_budget
+        totals["left"] = remaining_budget - additional_cost
         totals["remaining_budget"] = remaining_budget
+        totals["within"] = additional_cost <= remaining_budget
     next_plan["totals"] = totals
     return next_plan, diff, changes
 
