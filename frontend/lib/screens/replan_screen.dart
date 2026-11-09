@@ -21,6 +21,7 @@ class _ReplanScreenState extends State<ReplanScreen> {
   ReplanResult? _result;
   List<Map<String, dynamic>> _suggestions = [];
   List<Map<String, dynamic>> _versions = [];
+  final List<ChatMessage> _messages = [];
 
   @override
   void initState() {
@@ -56,6 +57,7 @@ class _ReplanScreenState extends State<ReplanScreen> {
       _busy = true;
       _error = null;
       _result = null;
+      _messages.add(ChatMessage(fromUser: true, text: text));
     });
     try {
       final api = context.read<AppState>().api;
@@ -75,10 +77,26 @@ class _ReplanScreenState extends State<ReplanScreen> {
       );
       if (confirmed != true) return;
       final result = await api.replan(widget.itinerary.id, text);
-      if (mounted) setState(() => _result = result);
+      if (mounted) {
+        final affected = (result.diff['affected_days'] as List? ?? []).join(', ');
+        setState(() {
+          _result = result;
+          _messages.add(
+            ChatMessage(
+              fromUser: false,
+              text: 'I prepared the update for day(s) $affected. Completed stops remain protected.',
+            ),
+          );
+        });
+      }
       await _loadVersions();
     } catch (e) {
-      if (mounted) setState(() => _error = e.toString());
+      if (mounted) {
+        setState(() {
+          _error = e.toString();
+          _messages.add(ChatMessage(fromUser: false, text: 'I could not apply that request: ${e.toString()}'));
+        });
+      }
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -105,7 +123,28 @@ class _ReplanScreenState extends State<ReplanScreen> {
             children: [
               const Text('Describe a change', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
               const SizedBox(height: 8),
-              const Text('Try: “remove stop lhr_fort on day 1” or “start later by 60 minutes on day 2”.'),
+              const Text(
+                'Use natural language. You can mention places, topics, timing, or remaining money. '
+                'I will preview the change before applying it.',
+              ),
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  'Remove the fort on day 1',
+                  'Find an indoor place for day 2',
+                  'I have Rs 20,000 left',
+                  'I already visited the first two places',
+                ]
+                    .map(
+                      (example) => ActionChip(
+                        label: Text(example),
+                        onPressed: _busy ? null : () => setState(() => _input.text = example),
+                      ),
+                    )
+                    .toList(),
+              ),
               const SizedBox(height: 16),
               TextField(
                 controller: _input,
@@ -131,6 +170,21 @@ class _ReplanScreenState extends State<ReplanScreen> {
                     subtitle: Text('Affected days: ${(_result!.diff['affected_days'] as List? ?? []).join(', ')}'),
                   ),
                 ),
+              ],
+              if (_messages.isNotEmpty) ...[
+                const SizedBox(height: 20),
+                const Text('Conversation', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+                for (final message in _messages)
+                  Align(
+                    alignment: message.fromUser ? Alignment.centerRight : Alignment.centerLeft,
+                    child: Card(
+                      color: message.fromUser ? Theme.of(context).colorScheme.primaryContainer : null,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(message.text),
+                      ),
+                    ),
+                  ),
               ],
               if (_suggestions.isNotEmpty) ...[
                 const SizedBox(height: 24),

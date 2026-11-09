@@ -201,6 +201,33 @@ def test_parser_marks_multiple_visited_stops():
     assert [change.place_id for change in changes] == ["first", "second"]
 
 
+@pytest.mark.parametrize(
+    ("text", "amount"),
+    [
+        ("I only have Rs 20,000 left", 20_000),
+        ("Reduce the remaining budget to 25k", 25_000),
+        ("I have 1.5 lakh left for the trip", 150_000),
+    ],
+)
+def test_parser_accepts_budget_updates(text, amount):
+    change = parse_change(text)
+
+    assert change.kind == ChangeKind.UPDATE_BUDGET
+    assert change.budget_amount == amount
+
+
+def test_budget_update_is_persisted_in_execution_state():
+    updated, diff = apply_changes(
+        _plan(),
+        {"city": "lahore", "city_id": "lahore", "size": 2, "day_start": "09:00"},
+        parse_changes("I only have Rs 20,000 left"),
+        _catalog(),
+    )
+
+    assert diff.budget_amount == 20_000
+    assert updated["execution"]["remaining_budget"] == 20_000
+
+
 def test_mark_visited_keeps_stop_and_locks_it():
     updated, diff = apply_changes(
         _plan(),

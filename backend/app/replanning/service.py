@@ -24,8 +24,12 @@ def apply_change(
     removed: list[str] = []
     visited: list[str] = []
     moved: list[str] = []
+    budget_amount: int | None = None
 
-    if change.kind == ChangeKind.START_LATER:
+    if change.kind == ChangeKind.UPDATE_BUDGET:
+        budget_amount = change.budget_amount
+        execution["remaining_budget"] = budget_amount
+    elif change.kind == ChangeKind.START_LATER:
         day_index = _index(change.day or 1, days)
         _shift_day(days[day_index], change.minutes)
         affected.add(change.day or 1)
@@ -76,10 +80,11 @@ def apply_change(
         removed=removed,
         visited=visited,
         moved=moved,
+        budget_amount=budget_amount,
         reason=change.kind.value,
     )
     updated["days"] = days
-    if change.kind == ChangeKind.MARK_VISITED:
+    if change.kind in (ChangeKind.MARK_VISITED, ChangeKind.UPDATE_BUDGET):
         updated["execution"] = execution
     return updated, diff
 
@@ -88,7 +93,9 @@ def apply_changes(
     plan: dict, prefs: dict, changes: list[ChangeRequest], catalog: Catalog, execution: dict | None = None
 ) -> tuple[dict, ReplanDiff]:
     current = copy.deepcopy(plan)
-    combined = ReplanDiff(affected_days=[], added=[], removed=[], visited=[], moved=[], reason="multiple")
+    combined = ReplanDiff(
+        affected_days=[], added=[], removed=[], visited=[], moved=[], budget_amount=None, reason="multiple"
+    )
     for change in changes:
         current, diff = apply_change(current, prefs, change, catalog, execution)
         combined.affected_days = sorted(set(combined.affected_days) | set(diff.affected_days))
@@ -96,6 +103,8 @@ def apply_changes(
         combined.removed.extend(diff.removed)
         combined.visited.extend(diff.visited)
         combined.moved.extend(diff.moved)
+        if diff.budget_amount is not None:
+            combined.budget_amount = diff.budget_amount
     return current, combined
 
 

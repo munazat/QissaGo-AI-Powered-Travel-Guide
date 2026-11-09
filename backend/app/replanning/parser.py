@@ -31,9 +31,16 @@ def parse_changes(text: str) -> list[ChangeRequest]:
 def _parse_part(value: str) -> list[ChangeRequest]:
     day = _day(value, r"\b(?:day|on)\s*(\d+)\b")
     target = _day(value, r"\b(?:to|into|for)\s*day\s*(\d+)\b")
-    chunks = [chunk.strip() for chunk in re.split(r"\s*,\s*|\s+\band\b\s+", value) if chunk.strip()]
+    chunks = [chunk.strip() for chunk in re.split(r"\s*,\s*(?=[a-z])|\s+\band\b\s+", value) if chunk.strip()]
     if len(chunks) > 1:
         return [change for chunk in chunks for change in _parse_part(chunk)]
+    if re.search(r"\b(?:budget|money|funds|cash|left)\b", value) and re.search(
+        r"\b(?:have|remaining|reduce|lower|increase|raise|set)\b", value
+    ):
+        amount = _budget_amount(value)
+        if amount is None:
+            raise ValueError("How much budget do you have left?")
+        return [ChangeRequest(kind=ChangeKind.UPDATE_BUDGET, budget_amount=amount)]
     if "start later" in value or "later start" in value or "delay" in value or "start at" in value:
         return [ChangeRequest(kind=ChangeKind.START_LATER, day=day or 1, minutes=_minutes(value))]
     if re.search(r"\b(?:move|shift|relocate|change)\b", value):
@@ -75,6 +82,15 @@ def _minutes(text: str) -> int:
         return 60
     amount = int(match.group(1))
     return amount * 60 if "hour" in match.group(0) else amount
+
+
+def _budget_amount(text: str) -> int | None:
+    match = re.search(r"(\d[\d,]*(?:\.\d+)?)\s*(k|thousand|lakh|lac)?", text)
+    if not match:
+        return None
+    amount = float(match.group(1).replace(",", ""))
+    multiplier = {"k": 1_000, "thousand": 1_000, "lakh": 100_000, "lac": 100_000}.get(match.group(2), 1)
+    return round(amount * multiplier)
 
 
 def _ordinals(text: str) -> list[str]:

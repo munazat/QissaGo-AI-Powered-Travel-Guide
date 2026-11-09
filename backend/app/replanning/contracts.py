@@ -9,6 +9,7 @@ class ChangeKind(StrEnum):
     ADD = "add"
     REMOVE = "remove"
     MARK_VISITED = "mark_visited"
+    UPDATE_BUDGET = "update_budget"
     MOVE = "move"
     START_LATER = "start_later"
     CHANGE_DAY = "change_day"
@@ -20,12 +21,19 @@ class ChangeRequest(BaseModel):
     day: int | None = Field(default=None, ge=1, le=31)
     target_day: int | None = Field(default=None, ge=1, le=31)
     minutes: int = Field(default=60, ge=15, le=240)
+    budget_amount: int | None = Field(default=None, ge=0)
 
     @model_validator(mode="after")
     def validate_fields(self) -> ChangeRequest:
         if (
             self.kind
-            in (ChangeKind.ADD, ChangeKind.REMOVE, ChangeKind.MARK_VISITED, ChangeKind.MOVE, ChangeKind.CHANGE_DAY)
+            in (
+                ChangeKind.ADD,
+                ChangeKind.REMOVE,
+                ChangeKind.MARK_VISITED,
+                ChangeKind.MOVE,
+                ChangeKind.CHANGE_DAY,
+            )
             and not self.place_id
         ):
             raise ValueError("place_id is required for this change")
@@ -33,6 +41,8 @@ class ChangeRequest(BaseModel):
             raise ValueError("day is required for this change")
         if self.kind in (ChangeKind.MOVE, ChangeKind.CHANGE_DAY) and not self.target_day:
             raise ValueError("target_day is required for this change")
+        if self.kind == ChangeKind.UPDATE_BUDGET and self.budget_amount is None:
+            raise ValueError("budget_amount is required for this change")
         return self
 
 
@@ -50,7 +60,9 @@ class ReplanDiff(BaseModel):
     added: list[str] = []
     removed: list[str] = []
     visited: list[str] = []
+    budget_amount: int | None = None
     moved: list[str] = []
+    budget_amount: int | None = None
     reason: str
 
 
