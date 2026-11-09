@@ -6,6 +6,30 @@ from app.replanning.service import apply_change
 from app.services.catalog import Catalog
 
 
+def _generated_itinerary(client, auth) -> dict:
+    response = client.post(
+        "/api/v1/itineraries/generate",
+        headers=auth,
+        json={
+            "preferences": {
+                "city": "lahore",
+                "start_date": "2099-01-10",
+                "days": 2,
+                "budget": 500000,
+                "group_type": "solo",
+                "group_size": 1,
+                "interests": ["history"],
+            }
+        },
+    )
+    assert response.status_code == 200, response.text
+    return response.json()["itineraries"][0]
+
+
+def _first_stop(plan: dict) -> dict:
+    return next(item for day in plan["days"] for item in day["items"] if item.get("kind") == "stop")
+
+
 def _catalog() -> Catalog:
     return Catalog(
         cities={
@@ -101,3 +125,81 @@ def test_add_rebuilds_requested_day():
     assert diff.added == ["Museum"]
     assert updated["days"][0]["items"][0]["id"] == "lhr_fort"
     assert updated["days"][0]["items"][1]["id"] == "lhr_museum"
+
+
+def test_preview_does_not_persist_and_apply_creates_version(client, auth):
+    itinerary = _generated_itinerary(client, auth)
+    stop = _first_stop(itinerary["plan"])
+    request = {"request_text": f"remove stop {stop['id']} on day 1"}
+
+    preview = client.post(
+        f"/api/v1/itineraries/{itinerary['id']}/replan/preview",
+        headers=auth,
+        json=request,
+    )
+    assert preview.status_code == 200, preview.text
+    assert preview.json()["version"] == 0
+    assert preview.json()["diff"]["removed"] == [stop["name"]]
+
+    unchanged = client.get(f"/api/v1/itineraries/{itinerary['id']}", headers=auth)
+    assert unchanged.status_code == 200
+    assert _first_stop(unchanged.json()["plan"])["id"] == stop["id"]
+
+    applied = client.post(f"/api/v1/itineraries/{itinerary['id']}/replan", headers=auth, json=request)
+    assert applied.status_code == 200, applied.text
+    assert applied.json()["version"] == 1
+    assert all(item.get("id") != stop["id"] for day in applied.json()["plan"]["days"] for item in day["items"])
+
+    versions = client.get(f"/api/v1/itineraries/{itinerary['id']}/versions", headers=auth)
+    assert versions.status_code == 200
+    assert [version["version"] for version in versions.json()] == [1]
+
+
+def test_progress_rejects_unknown_stops_and_locks_completed_stops(client, auth):
+    itinerary = _generated_itinerary(client, auth)
+    stop = _first_stop(itinerary["plan"])
+    progress_url = f"/api/v1/itineraries/{itinerary['id']}/progress"
+
+    unknown = client.put(
+        progress_url,
+        headers=auth,
+        json={"day": 1, "completed_stop_ids": ["does-not-exist"]},
+    )
+    assert unknown.status_code == 400
+    assert "Unknown stop" in unknown.json()["detail"]
+
+    updated = client.put(
+        progress_url,
+        headers=auth,
+        json={"day": 1, "completed_stop_ids": [stop["id"]], "current_time": "14:00"},
+    )
+    assert updated.status_code == 200
+    assert updated.json()["completed_stop_ids"] == [stop["id"]]
+
+    blocked = client.post(
+        f"/api/v1/itineraries/{itinerary['id']}/replan",
+        headers=auth,
+        json={"request_text": f"remove stop {stop['id']} on day 1"},
+    )
+    assert blocked.status_code == 400
+    assert "already completed" in blocked.json()["detail"]
+
+
+def test_replanning_is_owner_scoped(client, auth):
+    itinerary = _generated_itinerary(client, auth)
+    other = client.post(
+        "/api/v1/auth/register",
+        json={"name": "Other User", "email": "replan-other@example.com", "password": "secret123"},
+    )
+    assert other.status_code == 201
+    other_auth = {"Authorization": f"Bearer {other.json()['token']}"}
+
+    response = client.get(f"/api/v1/itineraries/{itinerary['id']}/versions", headers=other_auth)
+    assert response.status_code == 404
+
+    response = client.post(
+        f"/api/v1/itineraries/{itinerary['id']}/replan/preview",
+        headers=other_auth,
+        json={"request_text": "start later by 30 minutes on day 1"},
+    )
+    assert response.status_code == 404

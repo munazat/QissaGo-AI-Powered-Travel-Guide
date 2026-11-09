@@ -122,6 +122,8 @@ def _reschedule(day: dict, prefs: dict, catalog: Catalog, execution: dict | None
     if dropped:
         raise ValueError(f"These stops no longer fit the day: {', '.join(dropped)}")
     for item in items:
+        if item.get("kind") != "stop":
+            continue
         old = previous.get(item.get("id"), {})
         for key in ("cost_group", "weather_note", "image", "image_credit", "image_license", "description", "wiki_url"):
             if key in old:
