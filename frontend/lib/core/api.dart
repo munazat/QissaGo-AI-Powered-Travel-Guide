@@ -123,7 +123,7 @@ class ApiClient {
 
   Future<Map<String, dynamic>> updateProgress(String id, Map<String, dynamic> progress) async =>
       (await _send(() => _http.put(_uri('/itineraries/$id/progress'), headers: _headers, body: jsonEncode(progress)))
-          as Map)
+              as Map)
           .cast<String, dynamic>();
 
   Future<Map<String, dynamic>> progress(String id) async =>
