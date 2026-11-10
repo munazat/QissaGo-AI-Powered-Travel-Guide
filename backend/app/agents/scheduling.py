@@ -50,11 +50,11 @@ def assign_days(selected: list[dict], days: int, wdays: list[dict]) -> list[list
     return result
 
 
-def order_day(group: list[dict], day_w: dict) -> list[dict]:
+def order_day(group: list[dict], day_w: dict, origin: dict | None = None) -> list[dict]:
     buckets: dict[int, list[dict]] = {}
     for p in group:
         buckets.setdefault(BUCKET[effective_bucket(p, day_w)], []).append(p)
-    ordered, cur = [], None
+    ordered, cur = [], origin
     for b in sorted(buckets):
         cands = list(buckets[b])
         while cands:
@@ -74,12 +74,18 @@ def brk(kind: str, title: str, start: int, end: int) -> dict:
 
 
 def layout_day(
-    ordered: list[dict], day_w: dict, start: str, rate: int, cars: int, city: dict | None = None
+    ordered: list[dict],
+    day_w: dict,
+    start: str,
+    rate: int,
+    cars: int,
+    city: dict | None = None,
+    origin: dict | None = None,
 ) -> tuple[list[dict], list[str]]:
     speed = {"speed_kmh": city["speed_kmh"], "road_factor": city["road_factor"]} if city and "speed_kmh" in city else {}
     items: list[dict] = []
     dropped: list[str] = []
-    t, prev, lunch_done = hm_to_min(start), None, False
+    t, prev, lunch_done = hm_to_min(start), origin, False
     for poi in ordered:
         travel = leg(prev, poi, rate, cars, **speed) if prev else None
         tmin = travel["minutes"] if travel else 0

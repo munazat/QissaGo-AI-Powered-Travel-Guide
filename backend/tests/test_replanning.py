@@ -6,7 +6,7 @@ from app.db.models import Itinerary
 from app.db.session import SessionLocal
 from app.replanning.contracts import ChangeKind, ChangeRequest
 from app.replanning.parser import parse_change, parse_changes
-from app.replanning.service import apply_change, apply_changes
+from app.replanning.service import _reschedule, apply_change, apply_changes
 from app.services.catalog import Catalog, load_catalog
 
 
@@ -117,6 +117,35 @@ def test_remove_rebuilds_only_affected_day():
     assert diff.affected_days == [1]
     assert updated["days"][0]["items"] == []
     assert updated["days"][1] == plan["days"][1]
+
+
+def test_reschedule_continues_from_current_location():
+    plan = _plan()
+    plan["days"][0]["items"] = [
+        _stop("near_origin", "Near origin"),
+        _stop("far_from_origin", "Far from origin"),
+    ]
+    plan["days"][0]["items"][0]["lat"] = 31.52
+    plan["days"][0]["items"][0]["lon"] = 74.35
+    plan["days"][0]["items"][1]["lat"] = 31.55
+    plan["days"][0]["items"][1]["lon"] = 74.40
+    execution = {
+        "day": 1,
+        "current_lat": 31.55,
+        "current_lon": 74.40,
+    }
+
+    _reschedule(
+        plan["days"][0],
+        {"city": "lahore", "city_id": "lahore", "size": 2, "day_start": "09:00"},
+        _catalog(),
+        execution,
+    )
+
+    stops = [item for item in plan["days"][0]["items"] if item.get("kind") == "stop"]
+    assert [stop["id"] for stop in stops] == ["far_from_origin", "near_origin"]
+    assert stops[0]["leg"]["km"] == 0
+    assert "origin=31.550000,74.400000" in plan["days"][0]["route_url"]
 
 
 def test_add_rebuilds_requested_day():

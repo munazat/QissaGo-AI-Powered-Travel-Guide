@@ -215,7 +215,8 @@ def _reschedule(day: dict, prefs: dict, catalog: Catalog, execution: dict | None
     weather = day.get("weather", {})
     city = catalog.cities[prefs["city"]]
     remaining = [stop for stop in stops if stop.get("id") not in completed]
-    ordered = order_day(remaining, weather)
+    origin = _current_location(execution) if execution.get("day") == day.get("day") else None
+    ordered = order_day(remaining, weather, origin)
     day_start = prefs.get("day_start", "09:00")
     if execution.get("day") == day.get("day") and execution.get("current_time"):
         day_start = max(day_start, execution["current_time"])
@@ -228,6 +229,7 @@ def _reschedule(day: dict, prefs: dict, catalog: Catalog, execution: dict | None
         city["transport_per_km"],
         max(1, (prefs.get("group_size") or prefs.get("size") or 1 + 3) // 4),
         city,
+        origin,
     )
     if dropped:
         raise ValueError(f"These stops no longer fit the day: {', '.join(dropped)}")
@@ -242,9 +244,18 @@ def _reschedule(day: dict, prefs: dict, catalog: Catalog, execution: dict | None
         item["osm_url"] = osm_link(item["lat"], item["lon"])
     day["items"] = locked + items
     points = [(item["lat"], item["lon"]) for item in items if item.get("kind") == "stop"]
-    day["route_url"] = directions_link(points)
+    route_points = ([(origin["lat"], origin["lon"])] if origin else []) + points
+    day["route_url"] = directions_link(route_points)
     day["km"] = round(sum((item.get("leg") or {}).get("km", 0) for item in items), 1)
     day["travel_minutes"] = sum((item.get("leg") or {}).get("minutes", 0) for item in items)
     day["stops"] = len(items)
     date = dt.date.fromisoformat(day["date"])
     day["weekday"] = date.strftime("%a")
+
+
+def _current_location(execution: dict) -> dict | None:
+    latitude = execution.get("current_lat")
+    longitude = execution.get("current_lon")
+    if latitude is None or longitude is None:
+        return None
+    return {"lat": float(latitude), "lon": float(longitude)}
