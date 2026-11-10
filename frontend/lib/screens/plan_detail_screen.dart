@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +40,8 @@ class _PlanDetailScreenState extends State<PlanDetailScreen> {
   int _day = 0;
   bool _saving = false;
   bool _exporting = false;
+  bool _locationBusy = false;
+  Position? _currentPosition;
   final Set<String> _completedStops = {};
   final Set<String> _skippedStops = {};
 
@@ -99,6 +102,8 @@ class _PlanDetailScreenState extends State<PlanDetailScreen> {
         'completed_stop_ids': nextCompleted.toList(),
         'skipped_stop_ids': nextSkipped.toList(),
         'current_time': _nowHm(),
+        if (_currentPosition != null) 'current_lat': _currentPosition!.latitude,
+        if (_currentPosition != null) 'current_lon': _currentPosition!.longitude,
       });
       if (mounted) {
         setState(() {
@@ -112,6 +117,41 @@ class _PlanDetailScreenState extends State<PlanDetailScreen> {
       }
     } catch (e) {
       if (mounted) showError(context, e);
+    }
+  }
+
+  Future<void> _shareCurrentLocation() async {
+    if (_locationBusy) return;
+    setState(() => _locationBusy = true);
+    try {
+      if (!await Geolocator.isLocationServiceEnabled()) {
+        throw Exception('Location services are disabled. Enable them and try again.');
+      }
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+        throw Exception('Location permission was not granted.');
+      }
+      final position = await Geolocator.getCurrentPosition();
+      if (!mounted) return;
+      await context.read<AppState>().api.updateProgress(_id, {
+        'day': _day + 1,
+        'current_time': _nowHm(),
+        'current_lat': position.latitude,
+        'current_lon': position.longitude,
+        'completed_stop_ids': _completedStops.toList(),
+        'skipped_stop_ids': _skippedStops.toList(),
+      });
+      if (!mounted) return;
+      setState(() => _currentPosition = position);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Current location shared with your plan.')));
+    } catch (e) {
+      if (mounted) showError(context, e);
+    } finally {
+      if (mounted) setState(() => _locationBusy = false);
     }
   }
 
@@ -187,6 +227,20 @@ class _PlanDetailScreenState extends State<PlanDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _DayHeader(day: day, showWeather: show['weather'] ?? true),
+              Align(
+                alignment: Alignment.centerRight,
+                child: OutlinedButton.icon(
+                  onPressed: _locationBusy ? null : _shareCurrentLocation,
+                  icon: _locationBusy
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.my_location),
+                  label: Text(_locationBusy ? 'Sharing location...' : 'Share current location'),
+                ),
+              ),
               _Timeline(
                 key: ValueKey('${trip.id}-$_day'),
                 day: day,
