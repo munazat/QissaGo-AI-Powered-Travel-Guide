@@ -396,10 +396,18 @@ def test_progress_rejects_unknown_stops_and_locks_completed_stops(client, auth):
     updated = client.put(
         progress_url,
         headers=auth,
-        json={"day": 1, "completed_stop_ids": [stop["id"]], "current_time": "14:00"},
+        json={
+            "day": 1,
+            "completed_stop_ids": [stop["id"]],
+            "current_time": "14:00",
+            "current_lat": 31.5204,
+            "current_lon": 74.3587,
+        },
     )
     assert updated.status_code == 200
     assert updated.json()["completed_stop_ids"] == [stop["id"]]
+    assert updated.json()["current_lat"] == 31.5204
+    assert updated.json()["current_lon"] == 74.3587
 
     blocked = client.post(
         f"/api/v1/itineraries/{itinerary['id']}/replan",

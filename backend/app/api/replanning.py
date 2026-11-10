@@ -188,7 +188,8 @@ def update_progress(
     unknown = requested - known
     if unknown:
         raise HTTPException(400, f"Unknown stop(s) for day {body.day}: {', '.join(sorted(unknown))}")
-    execution = body.model_dump(exclude_none=True)
+    execution = _execution(itinerary)
+    execution.update(body.model_dump(exclude_none=True))
     itinerary.plan = copy.deepcopy(itinerary.plan)
     itinerary.plan["execution"] = execution
     db.commit()
